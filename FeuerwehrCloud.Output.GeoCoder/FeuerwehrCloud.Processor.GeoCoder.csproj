@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{74D5CFBC-86E6-4055-A654-137ED582AB12}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FeuerwehrCloud.Processor.GeoCoder</RootNamespace>
+    <AssemblyName>FeuerwehrCloud.Processor.GeoCoder</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - Windows|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug - Windows\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="GoogleMaps.LocationServices">
+      <HintPath>..\packages\GoogleMaps.LocationServices.0.9.8.5\lib\net40\GoogleMaps.LocationServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Geocoding">
+      <HintPath>..\packages\Geocoding.net.3.2.1\lib\net40\Geocoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Workflow.Activities">
+      <HintPath>..\System.Workflow.Activities.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Workflow.ComponentModel">
+      <HintPath>..\System.Workflow.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Workflow.Runtime">
+      <HintPath>..\System.Workflow.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MyClass.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="GoogleMaps.LocationServices.readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="geocoder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>de.SYStemiya.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
+      <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
+      <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
