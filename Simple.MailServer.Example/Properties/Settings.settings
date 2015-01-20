@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BOSSMTP.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="tesseract_path" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/usr/bin/tesseract</Value>
+    </Setting>
+    <Setting Name="mutool_path" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/usr/local/bin/mutool</Value>
+    </Setting>
+    <Setting Name="lp_path" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/usr/bin/lp</Value>
+    </Setting>
+    <Setting Name="connection_string" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
