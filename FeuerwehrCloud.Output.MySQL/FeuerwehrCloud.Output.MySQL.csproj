@@ -3,11 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{039F45A0-DB21-495E-A09E-56433B12378A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>FeuerwehrCloud.PrintImage</RootNamespace>
-    <AssemblyName>FeuerwehrCloud.PrintImage</AssemblyName>
-    <Description>Programm zum Ausdrucken von Bildern auf den Standarddrucker (GTK-Version)</Description>
+    <ProjectGuid>{BD80E19B-924A-4710-A0CE-85FF9FCBB0D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FeuerwehrCloud.Output.MySQL</RootNamespace>
+    <AssemblyName>FeuerwehrCloud.Output.MySQL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -19,12 +18,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <Commandlineparameters>img-0005.png img-0005.png img-0005.png img-0005.png</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -42,43 +40,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Data" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.5\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="gdk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="glib-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="glade-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="pango-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="atk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Mono.Posix" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="Mono.Cairo" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="gtk-gui\gui.stetic">
-      <LogicalName>gui.stetic</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="gtk-gui\generated.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
       <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
       <Name>de.SYStemiya.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
+      <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
+      <Name>FeuerwehrCloud.Plugin</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

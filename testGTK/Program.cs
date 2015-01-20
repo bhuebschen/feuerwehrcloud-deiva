@@ -31,7 +31,7 @@ namespace FeuerwehrCloud.PrintImage
 						try {
 							Cairo.Context cr = context.CairoContext;
 							cr.MoveTo(0, 0);
-							Gdk.Cairo.SetSourcePixbuf(cr, pixBuf,0,10);
+							Gdk.CairoHelper.SetSourcePixbuf(cr, pixBuf,0,10);
 							cr.Paint();
 							((IDisposable) cr).Dispose();
 
