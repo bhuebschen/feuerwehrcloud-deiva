@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0937A4F9-7482-4471-82A2-5D6C51AB88F7}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FeuerwehrCloud.Service</RootNamespace>
+    <AssemblyName>FeuerwehrCloud.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - Windows|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug - Windows\</OutputPath>
+    <DefineConstants>DEBUG;__WINDOWS__</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="DynamicLua">
+      <HintPath>..\packages\DynamicLua.1.1.2.0\lib\net40-Client\DynamicLua.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="UPnP">
+      <HintPath>..\UPnP.dll</HintPath>
+    </Reference>
+    <Reference Include="NLua">
+      <HintPath>..\NLua\Core\NLua\obj\Release\NLua.dll</HintPath>
+    </Reference>
+    <Reference Include="KopiLua">
+      <HintPath>..\NLua\Core\KopiLua\Bin\Release\net45\KopiLua.dll</HintPath>
+    </Reference>
+    <Reference Include="KeraLua">
+      <HintPath>..\NLua\Core\KeraLua\src\bin\Release\net45\KeraLua.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Fakes Include="Fakes\Mono.Posix.fakes" />
+    <None Include="packages.config" />
+    <None Include="liblua52.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+xcopy /s /y "\\psf\Host\Volumes\Macintosh HD\FeuerwehrCloud - Source\packages\NLua.1.3.2.1\lib\native\*.*" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>de.SYStemiya.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
+      <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
+      <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
