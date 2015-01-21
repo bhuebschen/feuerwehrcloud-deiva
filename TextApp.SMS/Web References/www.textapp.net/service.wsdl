@@ -1,0 +1,1753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s0="http://www.textapp.net/" xmlns:tns="http://www.textapp.net/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.textapp.net/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.textapp.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="SendSMS">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientBillingReference" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientMessageReference" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="originator" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="destinations" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="body" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="validity" type="xs:long" />
+            <xs:element minOccurs="1" maxOccurs="1" name="characterSetID" type="xs:int" />
+            <xs:element minOccurs="1" maxOccurs="1" name="replyMethodID" type="xs:int" />
+            <xs:element minOccurs="0" maxOccurs="1" name="replyData" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="statusNotificationUrl" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendSMSResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="SendSMSResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSurveyResponses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientEnrolmentReference" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="endDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSurveyResponsesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSurveyResponsesResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSurveyResponsesAsXML">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientEnrolmentReference" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="endDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSurveyResponsesAsXMLResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSurveyResponsesAsXMLResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAllSurveyResponsesAsXML">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientEnrolmentReference" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="endDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetAllSurveyResponsesAsXMLResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetAllSurveyResponsesAsXMLResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetUnroutableSurveyResponsesAsXML">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="startDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="endDate" type="xs:dateTime" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetUnroutableSurveyResponsesAsXMLResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetUnroutableSurveyResponsesAsXMLResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EnrolIntoSurvey">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="destinations" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EnrolIntoSurveyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="EnrolIntoSurveyResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EnrolIntoSurveyWithReference">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="destinations" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientEnrolmentReference" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="EnrolIntoSurveyWithReferenceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="EnrolIntoSurveyWithReferenceResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CancelParticipant">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="number" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="surveyID" type="xs:long" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CancelParticipantResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="CancelParticipantResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSMSStatus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientMessageReference" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSMSStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSMSStatusResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSMSReply">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientMessageReference" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSMSReplyResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSMSReplyResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSMSInbound">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="number" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="keyword" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSMSInboundResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSMSInboundResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSubscribers">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="number" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="keyword" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetSubscribersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetSubscribersResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendPremiumSMS">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientBillingReference" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientMessageReference" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="rbid" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="body" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="validity" type="xs:long" />
+            <xs:element minOccurs="1" maxOccurs="1" name="characterSetID" type="xs:int" />
+            <xs:element minOccurs="0" maxOccurs="1" name="statusNotificationUrl" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendPremiumSMSResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="SendPremiumSMSResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPremiumSMSInbound">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="shortcode" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="keyword" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPremiumSMSInboundResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetPremiumSMSInboundResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPremiumSMSStatus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientMessageReference" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetPremiumSMSStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetPremiumSMSStatusResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCreditsLeft">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCreditsLeftResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="GetCreditsLeftResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TestSendSMS">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientBillingReference" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="clientMessageReference" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="originator" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="destinations" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="body" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="validity" type="xs:long" />
+            <xs:element minOccurs="1" maxOccurs="1" name="characterSetID" type="xs:int" />
+            <xs:element minOccurs="1" maxOccurs="1" name="replyMethodID" type="xs:int" />
+            <xs:element minOccurs="0" maxOccurs="1" name="replyData" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="statusNotificationUrl" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TestSendSMSResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="TestSendSMSResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TestService">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="returnCSVString" type="xs:boolean" />
+            <xs:element minOccurs="0" maxOccurs="1" name="externalLogin" type="xs:string" />
+            <xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TestServiceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="TestServiceResult" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="string" nillable="true" type="xs:string" />
+    </xs:schema>
+  </types>
+  <message name="SendSMSSoapIn">
+    <part name="parameters" element="tns:SendSMS" />
+  </message>
+  <message name="SendSMSSoapOut">
+    <part name="parameters" element="tns:SendSMSResponse" />
+  </message>
+  <message name="GetSurveyResponsesSoapIn">
+    <part name="parameters" element="tns:GetSurveyResponses" />
+  </message>
+  <message name="GetSurveyResponsesSoapOut">
+    <part name="parameters" element="tns:GetSurveyResponsesResponse" />
+  </message>
+  <message name="GetSurveyResponsesAsXMLSoapIn">
+    <part name="parameters" element="tns:GetSurveyResponsesAsXML" />
+  </message>
+  <message name="GetSurveyResponsesAsXMLSoapOut">
+    <part name="parameters" element="tns:GetSurveyResponsesAsXMLResponse" />
+  </message>
+  <message name="GetAllSurveyResponsesAsXMLSoapIn">
+    <part name="parameters" element="tns:GetAllSurveyResponsesAsXML" />
+  </message>
+  <message name="GetAllSurveyResponsesAsXMLSoapOut">
+    <part name="parameters" element="tns:GetAllSurveyResponsesAsXMLResponse" />
+  </message>
+  <message name="GetUnroutableSurveyResponsesAsXMLSoapIn">
+    <part name="parameters" element="tns:GetUnroutableSurveyResponsesAsXML" />
+  </message>
+  <message name="GetUnroutableSurveyResponsesAsXMLSoapOut">
+    <part name="parameters" element="tns:GetUnroutableSurveyResponsesAsXMLResponse" />
+  </message>
+  <message name="EnrolIntoSurveySoapIn">
+    <part name="parameters" element="tns:EnrolIntoSurvey" />
+  </message>
+  <message name="EnrolIntoSurveySoapOut">
+    <part name="parameters" element="tns:EnrolIntoSurveyResponse" />
+  </message>
+  <message name="EnrolIntoSurveyWithReferenceSoapIn">
+    <part name="parameters" element="tns:EnrolIntoSurveyWithReference" />
+  </message>
+  <message name="EnrolIntoSurveyWithReferenceSoapOut">
+    <part name="parameters" element="tns:EnrolIntoSurveyWithReferenceResponse" />
+  </message>
+  <message name="CancelParticipantSoapIn">
+    <part name="parameters" element="tns:CancelParticipant" />
+  </message>
+  <message name="CancelParticipantSoapOut">
+    <part name="parameters" element="tns:CancelParticipantResponse" />
+  </message>
+  <message name="GetSMSStatusSoapIn">
+    <part name="parameters" element="tns:GetSMSStatus" />
+  </message>
+  <message name="GetSMSStatusSoapOut">
+    <part name="parameters" element="tns:GetSMSStatusResponse" />
+  </message>
+  <message name="GetSMSReplySoapIn">
+    <part name="parameters" element="tns:GetSMSReply" />
+  </message>
+  <message name="GetSMSReplySoapOut">
+    <part name="parameters" element="tns:GetSMSReplyResponse" />
+  </message>
+  <message name="GetSMSInboundSoapIn">
+    <part name="parameters" element="tns:GetSMSInbound" />
+  </message>
+  <message name="GetSMSInboundSoapOut">
+    <part name="parameters" element="tns:GetSMSInboundResponse" />
+  </message>
+  <message name="GetSubscribersSoapIn">
+    <part name="parameters" element="tns:GetSubscribers" />
+  </message>
+  <message name="GetSubscribersSoapOut">
+    <part name="parameters" element="tns:GetSubscribersResponse" />
+  </message>
+  <message name="SendPremiumSMSSoapIn">
+    <part name="parameters" element="tns:SendPremiumSMS" />
+  </message>
+  <message name="SendPremiumSMSSoapOut">
+    <part name="parameters" element="tns:SendPremiumSMSResponse" />
+  </message>
+  <message name="GetPremiumSMSInboundSoapIn">
+    <part name="parameters" element="tns:GetPremiumSMSInbound" />
+  </message>
+  <message name="GetPremiumSMSInboundSoapOut">
+    <part name="parameters" element="tns:GetPremiumSMSInboundResponse" />
+  </message>
+  <message name="GetPremiumSMSStatusSoapIn">
+    <part name="parameters" element="tns:GetPremiumSMSStatus" />
+  </message>
+  <message name="GetPremiumSMSStatusSoapOut">
+    <part name="parameters" element="tns:GetPremiumSMSStatusResponse" />
+  </message>
+  <message name="GetCreditsLeftSoapIn">
+    <part name="parameters" element="tns:GetCreditsLeft" />
+  </message>
+  <message name="GetCreditsLeftSoapOut">
+    <part name="parameters" element="tns:GetCreditsLeftResponse" />
+  </message>
+  <message name="TestSendSMSSoapIn">
+    <part name="parameters" element="tns:TestSendSMS" />
+  </message>
+  <message name="TestSendSMSSoapOut">
+    <part name="parameters" element="tns:TestSendSMSResponse" />
+  </message>
+  <message name="TestServiceSoapIn">
+    <part name="parameters" element="tns:TestService" />
+  </message>
+  <message name="TestServiceSoapOut">
+    <part name="parameters" element="tns:TestServiceResponse" />
+  </message>
+  <message name="SendSMSHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientBillingReference" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+    <part name="originator" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="body" type="s:string" />
+    <part name="validity" type="s:string" />
+    <part name="characterSetID" type="s:string" />
+    <part name="replyMethodID" type="s:string" />
+    <part name="replyData" type="s:string" />
+    <part name="statusNotificationUrl" type="s:string" />
+  </message>
+  <message name="SendSMSHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSurveyResponsesHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetSurveyResponsesHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSurveyResponsesAsXMLHttpGetIn">
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetSurveyResponsesAsXMLHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetAllSurveyResponsesAsXMLHttpGetIn">
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetAllSurveyResponsesAsXMLHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetUnroutableSurveyResponsesAsXMLHttpGetIn">
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetUnroutableSurveyResponsesAsXMLHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="EnrolIntoSurveyHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="EnrolIntoSurveyHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="EnrolIntoSurveyWithReferenceHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="surveyID" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+  </message>
+  <message name="EnrolIntoSurveyWithReferenceHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="CancelParticipantHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="number" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="CancelParticipantHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSMSStatusHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+  </message>
+  <message name="GetSMSStatusHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSMSReplyHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+  </message>
+  <message name="GetSMSReplyHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSMSInboundHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="number" type="s:string" />
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="GetSMSInboundHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSubscribersHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="number" type="s:string" />
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="GetSubscribersHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="SendPremiumSMSHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientBillingReference" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+    <part name="rbid" type="s:string" />
+    <part name="body" type="s:string" />
+    <part name="validity" type="s:string" />
+    <part name="characterSetID" type="s:string" />
+    <part name="statusNotificationUrl" type="s:string" />
+  </message>
+  <message name="SendPremiumSMSHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetPremiumSMSInboundHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="shortcode" type="s:string" />
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="GetPremiumSMSInboundHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetPremiumSMSStatusHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+  </message>
+  <message name="GetPremiumSMSStatusHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetCreditsLeftHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="GetCreditsLeftHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="TestSendSMSHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientBillingReference" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+    <part name="originator" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="body" type="s:string" />
+    <part name="validity" type="s:string" />
+    <part name="characterSetID" type="s:string" />
+    <part name="replyMethodID" type="s:string" />
+    <part name="replyData" type="s:string" />
+    <part name="statusNotificationUrl" type="s:string" />
+  </message>
+  <message name="TestSendSMSHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="TestServiceHttpGetIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="TestServiceHttpGetOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="SendSMSHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientBillingReference" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+    <part name="originator" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="body" type="s:string" />
+    <part name="validity" type="s:string" />
+    <part name="characterSetID" type="s:string" />
+    <part name="replyMethodID" type="s:string" />
+    <part name="replyData" type="s:string" />
+    <part name="statusNotificationUrl" type="s:string" />
+  </message>
+  <message name="SendSMSHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSurveyResponsesHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetSurveyResponsesHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSurveyResponsesAsXMLHttpPostIn">
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetSurveyResponsesAsXMLHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetAllSurveyResponsesAsXMLHttpPostIn">
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetAllSurveyResponsesAsXMLHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetUnroutableSurveyResponsesAsXMLHttpPostIn">
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="startDate" type="s:string" />
+    <part name="endDate" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="GetUnroutableSurveyResponsesAsXMLHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="EnrolIntoSurveyHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="EnrolIntoSurveyHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="EnrolIntoSurveyWithReferenceHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="surveyID" type="s:string" />
+    <part name="clientEnrolmentReference" type="s:string" />
+  </message>
+  <message name="EnrolIntoSurveyWithReferenceHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="CancelParticipantHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="number" type="s:string" />
+    <part name="surveyID" type="s:string" />
+  </message>
+  <message name="CancelParticipantHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSMSStatusHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+  </message>
+  <message name="GetSMSStatusHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSMSReplyHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+  </message>
+  <message name="GetSMSReplyHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSMSInboundHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="number" type="s:string" />
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="GetSMSInboundHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetSubscribersHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="number" type="s:string" />
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="GetSubscribersHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="SendPremiumSMSHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientBillingReference" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+    <part name="rbid" type="s:string" />
+    <part name="body" type="s:string" />
+    <part name="validity" type="s:string" />
+    <part name="characterSetID" type="s:string" />
+    <part name="statusNotificationUrl" type="s:string" />
+  </message>
+  <message name="SendPremiumSMSHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetPremiumSMSInboundHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="shortcode" type="s:string" />
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="GetPremiumSMSInboundHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetPremiumSMSStatusHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+  </message>
+  <message name="GetPremiumSMSStatusHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="GetCreditsLeftHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="GetCreditsLeftHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="TestSendSMSHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="clientBillingReference" type="s:string" />
+    <part name="clientMessageReference" type="s:string" />
+    <part name="originator" type="s:string" />
+    <part name="destinations" type="s:string" />
+    <part name="body" type="s:string" />
+    <part name="validity" type="s:string" />
+    <part name="characterSetID" type="s:string" />
+    <part name="replyMethodID" type="s:string" />
+    <part name="replyData" type="s:string" />
+    <part name="statusNotificationUrl" type="s:string" />
+  </message>
+  <message name="TestSendSMSHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <message name="TestServiceHttpPostIn">
+    <part name="returnCSVString" type="s:string" />
+    <part name="externalLogin" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="TestServiceHttpPostOut">
+    <part name="Body" element="tns:string" />
+  </message>
+  <portType name="ServiceSoap">
+    <operation name="SendSMS">
+      <input message="tns:SendSMSSoapIn" />
+      <output message="tns:SendSMSSoapOut" />
+    </operation>
+    <operation name="GetSurveyResponses">
+      <input message="tns:GetSurveyResponsesSoapIn" />
+      <output message="tns:GetSurveyResponsesSoapOut" />
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <input message="tns:GetSurveyResponsesAsXMLSoapIn" />
+      <output message="tns:GetSurveyResponsesAsXMLSoapOut" />
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <input message="tns:GetAllSurveyResponsesAsXMLSoapIn" />
+      <output message="tns:GetAllSurveyResponsesAsXMLSoapOut" />
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <input message="tns:GetUnroutableSurveyResponsesAsXMLSoapIn" />
+      <output message="tns:GetUnroutableSurveyResponsesAsXMLSoapOut" />
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <input message="tns:EnrolIntoSurveySoapIn" />
+      <output message="tns:EnrolIntoSurveySoapOut" />
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <input message="tns:EnrolIntoSurveyWithReferenceSoapIn" />
+      <output message="tns:EnrolIntoSurveyWithReferenceSoapOut" />
+    </operation>
+    <operation name="CancelParticipant">
+      <input message="tns:CancelParticipantSoapIn" />
+      <output message="tns:CancelParticipantSoapOut" />
+    </operation>
+    <operation name="GetSMSStatus">
+      <input message="tns:GetSMSStatusSoapIn" />
+      <output message="tns:GetSMSStatusSoapOut" />
+    </operation>
+    <operation name="GetSMSReply">
+      <input message="tns:GetSMSReplySoapIn" />
+      <output message="tns:GetSMSReplySoapOut" />
+    </operation>
+    <operation name="GetSMSInbound">
+      <input message="tns:GetSMSInboundSoapIn" />
+      <output message="tns:GetSMSInboundSoapOut" />
+    </operation>
+    <operation name="GetSubscribers">
+      <input message="tns:GetSubscribersSoapIn" />
+      <output message="tns:GetSubscribersSoapOut" />
+    </operation>
+    <operation name="SendPremiumSMS">
+      <input message="tns:SendPremiumSMSSoapIn" />
+      <output message="tns:SendPremiumSMSSoapOut" />
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <input message="tns:GetPremiumSMSInboundSoapIn" />
+      <output message="tns:GetPremiumSMSInboundSoapOut" />
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <input message="tns:GetPremiumSMSStatusSoapIn" />
+      <output message="tns:GetPremiumSMSStatusSoapOut" />
+    </operation>
+    <operation name="GetCreditsLeft">
+      <input message="tns:GetCreditsLeftSoapIn" />
+      <output message="tns:GetCreditsLeftSoapOut" />
+    </operation>
+    <operation name="TestSendSMS">
+      <input message="tns:TestSendSMSSoapIn" />
+      <output message="tns:TestSendSMSSoapOut" />
+    </operation>
+    <operation name="TestService">
+      <input message="tns:TestServiceSoapIn" />
+      <output message="tns:TestServiceSoapOut" />
+    </operation>
+  </portType>
+  <portType name="ServiceHttpGet">
+    <operation name="SendSMS">
+      <input message="tns:SendSMSHttpGetIn" />
+      <output message="tns:SendSMSHttpGetOut" />
+    </operation>
+    <operation name="GetSurveyResponses">
+      <input message="tns:GetSurveyResponsesHttpGetIn" />
+      <output message="tns:GetSurveyResponsesHttpGetOut" />
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <input message="tns:GetSurveyResponsesAsXMLHttpGetIn" />
+      <output message="tns:GetSurveyResponsesAsXMLHttpGetOut" />
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <input message="tns:GetAllSurveyResponsesAsXMLHttpGetIn" />
+      <output message="tns:GetAllSurveyResponsesAsXMLHttpGetOut" />
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <input message="tns:GetUnroutableSurveyResponsesAsXMLHttpGetIn" />
+      <output message="tns:GetUnroutableSurveyResponsesAsXMLHttpGetOut" />
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <input message="tns:EnrolIntoSurveyHttpGetIn" />
+      <output message="tns:EnrolIntoSurveyHttpGetOut" />
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <input message="tns:EnrolIntoSurveyWithReferenceHttpGetIn" />
+      <output message="tns:EnrolIntoSurveyWithReferenceHttpGetOut" />
+    </operation>
+    <operation name="CancelParticipant">
+      <input message="tns:CancelParticipantHttpGetIn" />
+      <output message="tns:CancelParticipantHttpGetOut" />
+    </operation>
+    <operation name="GetSMSStatus">
+      <input message="tns:GetSMSStatusHttpGetIn" />
+      <output message="tns:GetSMSStatusHttpGetOut" />
+    </operation>
+    <operation name="GetSMSReply">
+      <input message="tns:GetSMSReplyHttpGetIn" />
+      <output message="tns:GetSMSReplyHttpGetOut" />
+    </operation>
+    <operation name="GetSMSInbound">
+      <input message="tns:GetSMSInboundHttpGetIn" />
+      <output message="tns:GetSMSInboundHttpGetOut" />
+    </operation>
+    <operation name="GetSubscribers">
+      <input message="tns:GetSubscribersHttpGetIn" />
+      <output message="tns:GetSubscribersHttpGetOut" />
+    </operation>
+    <operation name="SendPremiumSMS">
+      <input message="tns:SendPremiumSMSHttpGetIn" />
+      <output message="tns:SendPremiumSMSHttpGetOut" />
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <input message="tns:GetPremiumSMSInboundHttpGetIn" />
+      <output message="tns:GetPremiumSMSInboundHttpGetOut" />
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <input message="tns:GetPremiumSMSStatusHttpGetIn" />
+      <output message="tns:GetPremiumSMSStatusHttpGetOut" />
+    </operation>
+    <operation name="GetCreditsLeft">
+      <input message="tns:GetCreditsLeftHttpGetIn" />
+      <output message="tns:GetCreditsLeftHttpGetOut" />
+    </operation>
+    <operation name="TestSendSMS">
+      <input message="tns:TestSendSMSHttpGetIn" />
+      <output message="tns:TestSendSMSHttpGetOut" />
+    </operation>
+    <operation name="TestService">
+      <input message="tns:TestServiceHttpGetIn" />
+      <output message="tns:TestServiceHttpGetOut" />
+    </operation>
+  </portType>
+  <portType name="ServiceHttpPost">
+    <operation name="SendSMS">
+      <input message="tns:SendSMSHttpPostIn" />
+      <output message="tns:SendSMSHttpPostOut" />
+    </operation>
+    <operation name="GetSurveyResponses">
+      <input message="tns:GetSurveyResponsesHttpPostIn" />
+      <output message="tns:GetSurveyResponsesHttpPostOut" />
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <input message="tns:GetSurveyResponsesAsXMLHttpPostIn" />
+      <output message="tns:GetSurveyResponsesAsXMLHttpPostOut" />
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <input message="tns:GetAllSurveyResponsesAsXMLHttpPostIn" />
+      <output message="tns:GetAllSurveyResponsesAsXMLHttpPostOut" />
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <input message="tns:GetUnroutableSurveyResponsesAsXMLHttpPostIn" />
+      <output message="tns:GetUnroutableSurveyResponsesAsXMLHttpPostOut" />
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <input message="tns:EnrolIntoSurveyHttpPostIn" />
+      <output message="tns:EnrolIntoSurveyHttpPostOut" />
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <input message="tns:EnrolIntoSurveyWithReferenceHttpPostIn" />
+      <output message="tns:EnrolIntoSurveyWithReferenceHttpPostOut" />
+    </operation>
+    <operation name="CancelParticipant">
+      <input message="tns:CancelParticipantHttpPostIn" />
+      <output message="tns:CancelParticipantHttpPostOut" />
+    </operation>
+    <operation name="GetSMSStatus">
+      <input message="tns:GetSMSStatusHttpPostIn" />
+      <output message="tns:GetSMSStatusHttpPostOut" />
+    </operation>
+    <operation name="GetSMSReply">
+      <input message="tns:GetSMSReplyHttpPostIn" />
+      <output message="tns:GetSMSReplyHttpPostOut" />
+    </operation>
+    <operation name="GetSMSInbound">
+      <input message="tns:GetSMSInboundHttpPostIn" />
+      <output message="tns:GetSMSInboundHttpPostOut" />
+    </operation>
+    <operation name="GetSubscribers">
+      <input message="tns:GetSubscribersHttpPostIn" />
+      <output message="tns:GetSubscribersHttpPostOut" />
+    </operation>
+    <operation name="SendPremiumSMS">
+      <input message="tns:SendPremiumSMSHttpPostIn" />
+      <output message="tns:SendPremiumSMSHttpPostOut" />
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <input message="tns:GetPremiumSMSInboundHttpPostIn" />
+      <output message="tns:GetPremiumSMSInboundHttpPostOut" />
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <input message="tns:GetPremiumSMSStatusHttpPostIn" />
+      <output message="tns:GetPremiumSMSStatusHttpPostOut" />
+    </operation>
+    <operation name="GetCreditsLeft">
+      <input message="tns:GetCreditsLeftHttpPostIn" />
+      <output message="tns:GetCreditsLeftHttpPostOut" />
+    </operation>
+    <operation name="TestSendSMS">
+      <input message="tns:TestSendSMSHttpPostIn" />
+      <output message="tns:TestSendSMSHttpPostOut" />
+    </operation>
+    <operation name="TestService">
+      <input message="tns:TestServiceHttpPostIn" />
+      <output message="tns:TestServiceHttpPostOut" />
+    </operation>
+  </portType>
+  <binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="SendSMS">
+      <soap:operation soapAction="http://www.textapp.net/SendSMS" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponses">
+      <soap:operation soapAction="http://www.textapp.net/GetSurveyResponses" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <soap:operation soapAction="http://www.textapp.net/GetSurveyResponsesAsXML" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <soap:operation soapAction="http://www.textapp.net/GetAllSurveyResponsesAsXML" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <soap:operation soapAction="http://www.textapp.net/GetUnroutableSurveyResponsesAsXML" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <soap:operation soapAction="http://www.textapp.net/EnrolIntoSurvey" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <soap:operation soapAction="http://www.textapp.net/EnrolIntoSurveyWithReference" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="CancelParticipant">
+      <soap:operation soapAction="http://www.textapp.net/CancelParticipant" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSMSStatus">
+      <soap:operation soapAction="http://www.textapp.net/GetSMSStatus" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSMSReply">
+      <soap:operation soapAction="http://www.textapp.net/GetSMSReply" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSMSInbound">
+      <soap:operation soapAction="http://www.textapp.net/GetSMSInbound" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSubscribers">
+      <soap:operation soapAction="http://www.textapp.net/GetSubscribers" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SendPremiumSMS">
+      <soap:operation soapAction="http://www.textapp.net/SendPremiumSMS" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <soap:operation soapAction="http://www.textapp.net/GetPremiumSMSInbound" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <soap:operation soapAction="http://www.textapp.net/GetPremiumSMSStatus" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCreditsLeft">
+      <soap:operation soapAction="http://www.textapp.net/GetCreditsLeft" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="TestSendSMS">
+      <soap:operation soapAction="http://www.textapp.net/TestSendSMS" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="TestService">
+      <soap:operation soapAction="http://www.textapp.net/TestService" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="SendSMS">
+      <soap12:operation soapAction="http://www.textapp.net/SendSMS" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponses">
+      <soap12:operation soapAction="http://www.textapp.net/GetSurveyResponses" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <soap12:operation soapAction="http://www.textapp.net/GetSurveyResponsesAsXML" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <soap12:operation soapAction="http://www.textapp.net/GetAllSurveyResponsesAsXML" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <soap12:operation soapAction="http://www.textapp.net/GetUnroutableSurveyResponsesAsXML" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <soap12:operation soapAction="http://www.textapp.net/EnrolIntoSurvey" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <soap12:operation soapAction="http://www.textapp.net/EnrolIntoSurveyWithReference" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="CancelParticipant">
+      <soap12:operation soapAction="http://www.textapp.net/CancelParticipant" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSMSStatus">
+      <soap12:operation soapAction="http://www.textapp.net/GetSMSStatus" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSMSReply">
+      <soap12:operation soapAction="http://www.textapp.net/GetSMSReply" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSMSInbound">
+      <soap12:operation soapAction="http://www.textapp.net/GetSMSInbound" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSubscribers">
+      <soap12:operation soapAction="http://www.textapp.net/GetSubscribers" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SendPremiumSMS">
+      <soap12:operation soapAction="http://www.textapp.net/SendPremiumSMS" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <soap12:operation soapAction="http://www.textapp.net/GetPremiumSMSInbound" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <soap12:operation soapAction="http://www.textapp.net/GetPremiumSMSStatus" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCreditsLeft">
+      <soap12:operation soapAction="http://www.textapp.net/GetCreditsLeft" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="TestSendSMS">
+      <soap12:operation soapAction="http://www.textapp.net/TestSendSMS" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+    <operation name="TestService">
+      <soap12:operation soapAction="http://www.textapp.net/TestService" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ServiceHttpGet" type="tns:ServiceHttpGet">
+    <http:binding verb="GET" />
+    <operation name="SendSMS">
+      <http:operation location="/SendSMS" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponses">
+      <http:operation location="/GetSurveyResponses" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <http:operation location="/GetSurveyResponsesAsXML" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <http:operation location="/GetAllSurveyResponsesAsXML" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <http:operation location="/GetUnroutableSurveyResponsesAsXML" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <http:operation location="/EnrolIntoSurvey" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <http:operation location="/EnrolIntoSurveyWithReference" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="CancelParticipant">
+      <http:operation location="/CancelParticipant" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSMSStatus">
+      <http:operation location="/GetSMSStatus" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSMSReply">
+      <http:operation location="/GetSMSReply" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSMSInbound">
+      <http:operation location="/GetSMSInbound" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSubscribers">
+      <http:operation location="/GetSubscribers" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="SendPremiumSMS">
+      <http:operation location="/SendPremiumSMS" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <http:operation location="/GetPremiumSMSInbound" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <http:operation location="/GetPremiumSMSStatus" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetCreditsLeft">
+      <http:operation location="/GetCreditsLeft" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="TestSendSMS">
+      <http:operation location="/TestSendSMS" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="TestService">
+      <http:operation location="/TestService" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ServiceHttpPost" type="tns:ServiceHttpPost">
+    <http:binding verb="POST" />
+    <operation name="SendSMS">
+      <http:operation location="/SendSMS" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponses">
+      <http:operation location="/GetSurveyResponses" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSurveyResponsesAsXML">
+      <http:operation location="/GetSurveyResponsesAsXML" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetAllSurveyResponsesAsXML">
+      <http:operation location="/GetAllSurveyResponsesAsXML" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetUnroutableSurveyResponsesAsXML">
+      <http:operation location="/GetUnroutableSurveyResponsesAsXML" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurvey">
+      <http:operation location="/EnrolIntoSurvey" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="EnrolIntoSurveyWithReference">
+      <http:operation location="/EnrolIntoSurveyWithReference" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="CancelParticipant">
+      <http:operation location="/CancelParticipant" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSMSStatus">
+      <http:operation location="/GetSMSStatus" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSMSReply">
+      <http:operation location="/GetSMSReply" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSMSInbound">
+      <http:operation location="/GetSMSInbound" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetSubscribers">
+      <http:operation location="/GetSubscribers" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="SendPremiumSMS">
+      <http:operation location="/SendPremiumSMS" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSInbound">
+      <http:operation location="/GetPremiumSMSInbound" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetPremiumSMSStatus">
+      <http:operation location="/GetPremiumSMSStatus" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="GetCreditsLeft">
+      <http:operation location="/GetCreditsLeft" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="TestSendSMS">
+      <http:operation location="/TestSendSMS" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+    <operation name="TestService">
+      <http:operation location="/TestService" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Service">
+    <port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://www.textapp.net/webservice/service.asmx" />
+    </port>
+    <port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://www.textapp.net/webservice/service.asmx" />
+    </port>
+    <port name="ServiceHttpGet" binding="tns:ServiceHttpGet">
+      <http:address location="http://www.textapp.net/webservice/service.asmx" />
+    </port>
+    <port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+      <http:address location="http://www.textapp.net/webservice/service.asmx" />
+    </port>
+  </service>
+</definitions>
