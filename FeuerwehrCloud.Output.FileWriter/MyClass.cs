@@ -2,14 +2,43 @@
 using System.Text;
 using FeuerwehrCloud.Plugin;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
 
-namespace FeuerwehrCloud.Output.FileWriter
+namespace FeuerwehrCloud.Output
 {
 	public class FileWriter : FeuerwehrCloud.Plugin.IPlugin 
 	{
 	
 		public event PluginEvent Event;
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+
+		public string Name {
+			get {
+				return "FileWriter";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "Dateierzeugungsplugin";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("9");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Output.FileWriter).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
 
 		public bool IsAsync
 		{
@@ -25,15 +54,22 @@ namespace FeuerwehrCloud.Output.FileWriter
 		}
 
 		public void Execute(params object[] list) {
-			string[] f = Array.ConvertAll (list, p => (string)p);
-			string OutPut = string.Join ("\n", f, 1, f.Length - 1);
-			System.IO.File.WriteAllText ((string)(list [0]), OutPut);
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [FileWriter] *** File ("+((string)(list [0])).ToUpper()+") written...");
+			try {
+				string[] f = Array.ConvertAll (list, p => (string)p);
+				string OutPut = string.Join ("\n", f, 1, f.Length - 1);
+				string r = (string)(list [0]);
+				System.IO.File.WriteAllText (r, OutPut);
+				FeuerwehrCloud.Helper.Logger.WriteLine ("|  > [FileWriter] *** File ("+r.ToUpper()+") written...");
+
+			} catch (Exception ex) {
+				FeuerwehrCloud.Helper.Logger.WriteLine(FeuerwehrCloud.Helper.Helper.GetExceptionDescription(ex));
+
+			}
 		}
 
 		public bool Initialize(IHost hostApplication) {
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [FileWriter] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** FileWriter loaded");
 			return true;
 		}
 			
@@ -43,37 +79,5 @@ namespace FeuerwehrCloud.Output.FileWriter
 
 	}
 
-	#region Actitity
-    public class FileWriterActivityValidator : System.Workflow.ComponentModel.Compiler.ActivityValidator
-    {
-    }
-
-    [System.Workflow.ComponentModel.Compiler.ActivityValidator(typeof(FileWriterActivityValidator))]
-    [System.Drawing.ToolboxBitmap(typeof(FileWriterActivity), "filewriter.ico")]
-    public class FileWriterActivity : System.Workflow.ComponentModel.Activity
-    {
-        public FileWriterActivity ()  {
-            this.Name = "FileWriterActivity";
-        }
-
-        public static System.Workflow.ComponentModel.DependencyProperty FileNameProperty = System.Workflow.ComponentModel.DependencyProperty.Register(
-			"Dateiname", typeof(string), typeof(FileWriterActivity));
-        [Description("Legt den Dateinamen fest, in den die Daten geschrieben werden sollen")]
-        [Category("Activity")]
-        [Browsable(true)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public string Dateiname
-        {
-            get
-            {
-                return ((string)base.GetValue(FileNameProperty));
-            }
-            set
-            {
-                base.SetValue(FileNameProperty, value);
-            }
-        }
-    }
-	#endregion
 }
 

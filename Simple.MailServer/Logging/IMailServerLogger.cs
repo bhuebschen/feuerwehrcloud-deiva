@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Simple.MailServer.Logging
+namespace SMTPd.Logging
 {
     public interface IMailServerLogger
     {

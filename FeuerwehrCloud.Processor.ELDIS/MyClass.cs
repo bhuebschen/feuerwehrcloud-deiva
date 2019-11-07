@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
 
-namespace FeuerwehrCloud.Processor.ELDIS
+namespace FeuerwehrCloud.Processor
 {
 	public class ELDIS : FeuerwehrCloud.Plugin.IPlugin
 	{
@@ -10,26 +11,52 @@ namespace FeuerwehrCloud.Processor.ELDIS
 		private System.Collections.Generic.Dictionary<string, string> ELDISConfig = new System.Collections.Generic.Dictionary<string, string> ();
 		#region IPlugin implementation
 
+		public string Name {
+			get {
+				return "ELDIS";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "ELDIS Modul";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("A");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Processor.ELDIS).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
+
 		public event FeuerwehrCloud.Plugin.PluginEvent Event;
 
 		public bool Initialize (FeuerwehrCloud.Plugin.IHost hostApplication)
 		{
 			my = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-+ [ELDIS] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** ELDIS loaded...");
 			if(!System.IO.File.Exists("ELDIS.cfg")) {
-				de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-+ [ELDIS] *** ERROR! NO CONFIGURATION FOUND!");
+				FeuerwehrCloud.Helper.Logger.WriteLine ("|  + [ELDIS] *** ERROR! NO CONFIGURATION FOUND!");
 				ELDISConfig.Add ("IP", "");
 				ELDISConfig.Add ("Username", "");
 				ELDISConfig.Add ("Password", "");
-				de.SYStemiya.Helper.AppSettings.Save(ELDISConfig,"ELDIS.cfg");
+				FeuerwehrCloud.Helper.AppSettings.Save(ELDISConfig,"ELDIS.cfg");
 			} 
-			ELDISConfig = de.SYStemiya.Helper.AppSettings.Load ("ELDIS.cfg");
+			ELDISConfig = FeuerwehrCloud.Helper.AppSettings.Load ("ELDIS.cfg");
 			return true;
 		}
 
 		public void Execute (params object[] list)
 		{
-			Console.Write ("| ["+System.DateTime.Now.ToString("T") +"] |-+ [ELDIS] *** Fetching data... ");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  + [ELDIS] *** Fetching data... ");
 
 			CookieContainer cookieJar = new CookieContainer();
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + ELDISConfig["IP"] + "/login");

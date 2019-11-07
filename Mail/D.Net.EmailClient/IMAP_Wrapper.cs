@@ -19,7 +19,7 @@ namespace D.Net.EmailClient
         private List<IEmail> _Messages = new List<IEmail>();
         private String _CurrentFolder;
         private bool _IsConnected = false;
-
+ 
         public bool IsConnected
         {
             get { return _IsConnected; }
@@ -74,6 +74,7 @@ namespace D.Net.EmailClient
         /// <param name="end"></param>
         public void LoadMessages(String start, String end)
         {
+			Messages.Clear();
             if (!_IsConnected) throw new EMailException { ExceptionType = EMAIL_EXCEPTION_TYPE.NOT_CONNECTED };
             if (!String.IsNullOrWhiteSpace(_CurrentFolder))
             {
@@ -96,7 +97,7 @@ namespace D.Net.EmailClient
                             IMAP_r_u_Fetch fetchResp = (IMAP_r_u_Fetch)e.Value;
 
                             string from = "";
-                            if (fetchResp.Envelope.From != null)
+							if (fetchResp.Envelope.From != null)
                             {
                                 for (int i = 0; i < fetchResp.Envelope.From.Length; i++)
                                 {
@@ -131,7 +132,9 @@ namespace D.Net.EmailClient
                                     wr.From.Add(((Mail_t_Mailbox)item).Address);
                                 }
                             }
-                            _Messages.Add(wr);
+							//var F = fetchResp.Flags.Flags;
+							//if(!F.Contains("\\Deleted"))
+								_Messages.Add(wr);
                             
                         }
                         catch (Exception exe)
@@ -301,10 +304,11 @@ namespace D.Net.EmailClient
 			Client.StoreMessageFlags(true, seq, IMAP_Flags_SetType.Add, new IMAP_t_MsgFlags(new string[] { IMAP_t_MsgFlags.Seen }));
 		}
 
-		public void SetDeleted()
+        public void SetDeleted(string TC)
 		{
 			IMAP_t_SeqSet seq = IMAP_t_SeqSet.Parse(_UID + ":" + _UID);
 			Client.StoreMessageFlags(true, seq, IMAP_Flags_SetType.Add, new IMAP_t_MsgFlags(new string[] { IMAP_t_MsgFlags.Deleted }));
+            Client.Expunge();
 		}
 
 		public void SetAnswered()

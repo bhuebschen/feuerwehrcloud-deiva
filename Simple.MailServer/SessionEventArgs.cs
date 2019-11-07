@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public class SessionEventArgs : EventArgs
     {

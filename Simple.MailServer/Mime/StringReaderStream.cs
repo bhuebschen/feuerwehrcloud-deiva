@@ -25,7 +25,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public class StringReaderStream : IDisposable
     {

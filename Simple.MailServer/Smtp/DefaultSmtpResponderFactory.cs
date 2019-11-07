@@ -18,76 +18,49 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using SMTPd.Mime;
+using SMTPd.Capabilities;
+using System;
+
+
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpResponderFactory<T> : ISmtpResponderFactory where T : IConfiguredSmtpRestrictions
+    public class SmtpResponderFactory : ISmtpResponderFactory
     {
-        private readonly T _configuration;
-
-        public DefaultSmtpResponderFactory(T configuration)
+        public SmtpResponderFactory(IConfiguredSmtpRestrictions configuration,
+            IEmailValidator emailValidator = null,
+            IGetSmtpCapabilities getSmtpCapabilities = null)
         {
-            _configuration = configuration;
+            if (configuration == null) throw new ArgumentNullException("configuration");
 
-            _dataResponder = new DefaultSmtpDataResponder<T>(_configuration);
-            _identificationResponder = new DefaultSmtpIdentificationResponder<T>(_configuration);
-            _mailFromResponder = new DefaultSmtpMailFromResponder<T>(_configuration);
-            _recipientToResponder = new DefaultSmtpRecipientToResponder<T>(_configuration);
-            _rawLineResponder = new DefaultSmtpRawLineResponder<T>(_configuration);
-            _resetResponder = new DefaultSmtpResetResponder<T>(_configuration);
-            _verifyResponder = new DefaultSmtpVerifyResponder<T>(_configuration);
+            emailValidator = emailValidator ?? new XamarinEmailValidator();
+            getSmtpCapabilities = getSmtpCapabilities ?? new GetDefaultSmtpCapabilities(configuration);
+
+            DataResponder = new SmtpDataResponder(configuration);
+            IdentificationResponder = new SmtpIdentificationResponder(configuration, getSmtpCapabilities);
+            MailFromResponder = new SmtpMailFromResponder(configuration, emailValidator);
+            RecipientToResponder = new SmtpRecipientToResponder(configuration, emailValidator);
+            RawLineResponder = new SmtpRawLineResponder(configuration);
+            ResetResponder = new SmtpResetResponder(configuration);
+            VerifyResponder = new SmtpVerifyResponder(configuration);
         }
 
-        private IRespondToSmtpData _dataResponder;
-        public IRespondToSmtpData DataResponder
-        {
-            get { return _dataResponder; }
-            set { _dataResponder = value ?? new DefaultSmtpDataResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpData DataResponder { get; set; }
 
-        private IRespondToSmtpIdentification _identificationResponder;
-        public IRespondToSmtpIdentification IdentificationResponder
-        {
-            get { return _identificationResponder; }
-            set { _identificationResponder = value ?? new DefaultSmtpIdentificationResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpIdentification IdentificationResponder { get; set; }
 
-        private IRespondToSmtpMailFrom _mailFromResponder;
-        public IRespondToSmtpMailFrom MailFromResponder
-        {
-            get { return _mailFromResponder; }
-            set { _mailFromResponder = value ?? new DefaultSmtpMailFromResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpMailFrom MailFromResponder { get; set; }
 
-        private IRespondToSmtpRecipientTo _recipientToResponder;
-        public IRespondToSmtpRecipientTo RecipientToResponder
-        {
-            get { return _recipientToResponder; }
-            set { _recipientToResponder = value ?? new DefaultSmtpRecipientToResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpRecipientTo RecipientToResponder { get; set; }
 
-        private IRespondToSmtpRawLine _rawLineResponder;
-        public IRespondToSmtpRawLine RawLineResponder
-        {
-            get { return _rawLineResponder; }
-            set { _rawLineResponder = value ?? new DefaultSmtpRawLineResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpRawLine RawLineResponder { get; set; }
 
-        private IRespondToSmtpReset _resetResponder;
-        public IRespondToSmtpReset ResetResponder
-        {
-            get { return _resetResponder; }
-            set { _resetResponder = value ?? new DefaultSmtpResetResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpReset ResetResponder { get; set; }
 
-        private IRespondToSmtpVerify _verifyResponder;
-        public IRespondToSmtpVerify VerifyResponder
-        {
-            get { return _verifyResponder; }
-            set { _verifyResponder = value ?? new DefaultSmtpVerifyResponder<T>(_configuration); }
-        }
+        public IRespondToSmtpVerify VerifyResponder { get; set; }
     }
 }

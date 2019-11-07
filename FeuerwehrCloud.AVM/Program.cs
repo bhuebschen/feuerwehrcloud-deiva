@@ -20,9 +20,9 @@ namespace FeuerwehrCloud.NetworkServices
 				NetConfig.Add ("FRITZPass", "");
 				NetConfig.Add ("TR064-Username", "dslf-config");
 				NetConfig.Add ("fing", "/usr/bin/fing");
-				de.SYStemiya.Helper.AppSettings.Save(NetConfig,"netconf.cfg");
+				FeuerwehrCloud.Helper.AppSettings.Save(NetConfig,"netconf.cfg");
 			} 
-			NetConfig = de.SYStemiya.Helper.AppSettings.Load ("netconf.cfg");
+			NetConfig = FeuerwehrCloud.Helper.AppSettings.Load ("netconf.cfg");
 
 			MyTimer.Interval = 60000;
 			MyTimer.Elapsed += HandleElapsed;
@@ -76,9 +76,9 @@ namespace FeuerwehrCloud.NetworkServices
 				dConfig.Add("PPPoEACName",PPPoEACName.ToString());
 				dConfig.Add("DNSEnabled",DNSEnabled.ToString());
 				dConfig.Add("DNSOverrideAllowed",DNSOverrideAllowed.ToString());
-				de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/wanppp.info");
+				FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/wanppp.info");
 			} catch (Exception ex) {
-				ex.ToString();
+				FeuerwehrCloud.Helper.Logger.WriteLine(FeuerwehrCloud.Helper.Helper.GetExceptionDescription(ex));
 			}
 
 
@@ -108,7 +108,7 @@ namespace FeuerwehrCloud.NetworkServices
 					WC.Credentials = cTam.SoapHttpClientProtocol.Credentials;
 					WC.DownloadFile (TamList, "dyndata/tam" + i.ToString () + ".xml");
 				}
-				de.SYStemiya.Helper.AppSettings.Save (dConfig, "dyndata/tam.info");
+				FeuerwehrCloud.Helper.AppSettings.Save (dConfig, "dyndata/tam.info");
 
 			}
 
@@ -145,7 +145,8 @@ namespace FeuerwehrCloud.NetworkServices
 
 
 			} catch (Exception ex) {
-				
+				FeuerwehrCloud.Helper.Logger.WriteLine(FeuerwehrCloud.Helper.Helper.GetExceptionDescription(ex));
+
 			}
 
 
@@ -170,7 +171,7 @@ namespace FeuerwehrCloud.NetworkServices
 			dConfig.Add("ATURCountry",ATURCountry.ToString());
 			dConfig.Add("UpstreamPower",UpstreamPower.ToString());
 			dConfig.Add("DownstreamPower",DownstreamPower.ToString());
-			de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/wandsl.info");
+			FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/wandsl.info");
 
 			FritzTR064.Generated.Wlanconfig1 wlc = new Wlanconfig1("https://"+NetConfig["Gateway"]+":"+NetConfig["GW-SSL-Port"]);
 			wlc.SoapHttpClientProtocol.Credentials = new NetworkCredential(NetConfig["TR064-Username"], NetConfig["FRITZPass"]);
@@ -194,7 +195,7 @@ namespace FeuerwehrCloud.NetworkServices
 			dConfig.Add("MinCharsPSK",MinCharsPSK.ToString());
 			dConfig.Add("MaxCharsPSK",MaxCharsPSK.ToString());
 			dConfig.Add("AllowedCharsPSK",AllowedCharsPSK.ToString());
-			de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/wlan.info");
+			FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/wlan.info");
 
 			FritzTR064.Generated.Voip voip1 = new Voip("https://"+NetConfig["Gateway"]+":"+NetConfig["GW-SSL-Port"]);
 			voip1.SoapHttpClientProtocol.Credentials = new NetworkCredential(NetConfig["TR064-Username"], NetConfig["FRITZPass"]);
@@ -217,7 +218,7 @@ namespace FeuerwehrCloud.NetworkServices
 			dConfig.Add("NumberOfNumbers",NumberOfNumbers.ToString());
 			dConfig.Add("NumberOfClients",NumberOfClients.ToString());
 			dConfig.Add("MaxVoipNumbers",MaxVoipNumbers.ToString());
-			de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/phone.info");
+			FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/phone.info");
 
 			string ManufacturerName; string ManufacturerOUI; string ModelName; string Description; string ProductClass; string SerialNumber; string SoftwareVersion; string HardwareVersion; string SpecVersion; string ProvisioningCode; uint UpTime; string DeviceLog;
 			FritzTR064.Generated.Deviceinfo DevInfo = new Deviceinfo ("https://"+NetConfig["Gateway"]+":"+NetConfig["GW-SSL-Port"]);
@@ -236,7 +237,7 @@ namespace FeuerwehrCloud.NetworkServices
 			dConfig.Add("ProvisioningCode",ProvisioningCode.ToString());
 			dConfig.Add("UpTime",UpTime.ToString());
 			dConfig.Add("DeviceLog",DeviceLog.ToString());
-			de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/DeviceInfo.info");
+			FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/DeviceInfo.info");
 
 
 			//FritzTR064.Generated.Contact
@@ -274,7 +275,7 @@ namespace FeuerwehrCloud.NetworkServices
 			P.WaitForExit (10000);
 			dConfig.Clear();
 			dConfig.Add("Count",USBCount.ToString());
-			de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/usb.info");
+			FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/usb.info");
 
 			P = new System.Diagnostics.Process () {
 				StartInfo =  {
@@ -292,7 +293,7 @@ namespace FeuerwehrCloud.NetworkServices
 			string[] i2C = lsi2c.Split(new []{"--"}, StringSplitOptions.RemoveEmptyEntries);
 			int I2Ccount =116- (i2C.Length-2);
 			dConfig.Add("Count",I2Ccount.ToString());
-			de.SYStemiya.Helper.AppSettings.Save(dConfig, "dyndata/i2c.info");
+			FeuerwehrCloud.Helper.AppSettings.Save(dConfig, "dyndata/i2c.info");
 
 		}
 	}

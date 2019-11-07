@@ -18,13 +18,16 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using SMTPd.Smtp.Config;
+
+
 #endregion
 
 using System;
 using System.Collections.Generic;
-using Simple.MailServer.Smtp.Config;
+using SMTPd;
 
-namespace Simple.MailServer.Smtp.Capabilities
+namespace SMTPd.Capabilities
 {
     class GetDefaultSmtpCapabilities : IGetSmtpCapabilities
     {
@@ -38,7 +41,7 @@ namespace Simple.MailServer.Smtp.Capabilities
 
         public IEnumerable<SmtpCapability> GetCapabilities()
         {
-            yield return SmtpCapabilities.Pipelining;
+            yield return SmtpCapabilities.                                                                                                                                                                                                                                                                             Pipelining;
 
             if (_configuration.MaxMailMessageSize > 0)
                 yield return SmtpCapabilities.MaxSizePerEmail(_configuration.MaxMailMessageSize);

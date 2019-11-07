@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public interface IHaveConnections
     {

@@ -346,6 +346,7 @@ namespace FeuerwehrCloud.Mime
 		/// <exception cref="FileNotFoundException">If <paramref name="file"/> does not exist</exception>
 		/// <exception>Other exceptions relevant to a <see cref="FileStream"/> might be thrown as well</exception>
 		/// <returns>A <see cref="Message"/> with the content loaded from the <paramref name="file"/></returns>
+		[System.Runtime.InteropServices.ComVisible (false)]
 		public static Message Load(FileInfo file)
 		{
 			if (file == null)
@@ -368,6 +369,7 @@ namespace FeuerwehrCloud.Mime
 		/// <exception cref="ArgumentNullException">If <paramref name="messageStream"/> is <see langword="null"/></exception>
 		/// <exception>Other exceptions relevant to <see cref="Stream.Read"/> might be thrown as well</exception>
 		/// <returns>A <see cref="Message"/> with the content loaded from the <paramref name="messageStream"/></returns>
+		[System.Runtime.InteropServices.ComVisible (false)]
 		public static Message Load(Stream messageStream)
 		{
 			if (messageStream == null)

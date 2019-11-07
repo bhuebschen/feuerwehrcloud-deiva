@@ -23,7 +23,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public static class EmailValidator
     {

@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle ("FeuerwehrCloud.Processor.OCR")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("SYStemiya - Jasmin Hübschen-Kabuth")]
-[assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Copyright © 2009-2013 SYStemiya - Alle Rechte vorbehalten.")]
+[assembly: AssemblyCompany ("FeuerwehrCloud")]
+[assembly: AssemblyProduct ("DEIVA")]
+[assembly: AssemblyCopyright ("Copyright (C) 2014-2015 FeuerwehrCloud. All rights reserved.")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".

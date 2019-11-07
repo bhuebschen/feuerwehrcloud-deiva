@@ -18,24 +18,36 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using SMTPd.Mime;
+using System;
+
+
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpMailFromResponder<T> : IRespondToSmtpMailFrom where T : IConfiguredSmtpRestrictions
+    public class SmtpMailFromResponder : IRespondToSmtpMailFrom
     {
-        protected readonly T Configuration;
+        protected readonly IConfiguredSmtpRestrictions Configuration;
+        private readonly IEmailValidator _emailValidator;
 
-        public DefaultSmtpMailFromResponder(T configuration)
+        public SmtpMailFromResponder(IConfiguredSmtpRestrictions configuration, IEmailValidator emailValidator)
         {
+            if (configuration == null) throw new ArgumentNullException("configuration");
+            if (emailValidator == null) throw new ArgumentNullException("emailValidator");
+
             Configuration = configuration;
+            _emailValidator = emailValidator;
         }
 
-        public SmtpResponse VerifyMailFrom(SmtpSessionInfo sessionInfo, MailAddressWithParameters mailAddressWithParameters)
+        public SmtpResponse VerifyMailFrom(ISmtpSessionInfo sessionInfo, MailAddressWithParameters mailAddressWithParameters)
         {
-            return SmtpResponse.OK;
+            if (!_emailValidator.Validate(mailAddressWithParameters.MailAddress))
+                return SmtpResponses.SyntaxError;
+
+            return SmtpResponses.OK;
         }
     }
 }

@@ -18,10 +18,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using SMTPd.Mime;
+
+
 #endregion
 
-using Simple.MailServer.Logging;
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Logging;
+using SMTPd.Smtp.Config;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -32,7 +35,7 @@ using System.Threading.Tasks;
 //using Mono.Security.Protocol.Tls;
 
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public class SmtpServer : IHaveConnections, IDisposable
     {
@@ -42,10 +45,16 @@ namespace Simple.MailServer.Smtp
         public ConcurrentDictionary<EndPoint, SmtpConnection> Connections { get; protected set; }
         public ISmtpServerConfiguration Configuration { get; set; }
 
+        public IEmailValidator EmailValidator
+        {
+            get { return _emailValidator ?? (_emailValidator = new XamarinEmailValidator()); }
+            set { _emailValidator = value; }
+        }
+
         private ISmtpResponderFactory _defaultResponderFactory;
         public ISmtpResponderFactory DefaultResponderFactory
         {
-            get { return _defaultResponderFactory ?? new DefaultSmtpResponderFactory<ISmtpServerConfiguration>(Configuration); }
+            get { return _defaultResponderFactory ?? (_defaultResponderFactory = new SmtpResponderFactory(Configuration, EmailValidator)); }
             set { _defaultResponderFactory = value; }
         }
 
@@ -65,13 +74,20 @@ namespace Simple.MailServer.Smtp
             WatchForConfigurationChange();
         }
 
+        public static SmtpServer CreateAndBind(IPAddress serverListenAddress, int port)
+        {
+            var smtpServer = new SmtpServer();
+            smtpServer.BindAndListenTo(serverListenAddress, port);
+            return smtpServer;
+        }
+
         private void WatchForConfigurationChange()
         {
             Configuration.ConfigurationChanged +=
                 c =>
                 {
-                    Watchdog.ConnectionTimeoutMilliseconds = c.GlobalConnectionTimeout;
-                    Watchdog.IdleTimeoutMilliseconds = c.ConnectionIdleTimeout;
+                    Watchdog.ConnectionTimeout = c.GlobalConnectionTimeout;
+                    Watchdog.IdleTimeout = c.ConnectionIdleTimeout;
                 };
         }
 
@@ -134,6 +150,7 @@ namespace Simple.MailServer.Smtp
         }
 
         private readonly object _bindAndListenLock = new object();
+        private IEmailValidator _emailValidator;
 
         public PortListener BindAndListenTo(IPAddress serverListenAddress, int serverPort)
         {
@@ -183,7 +200,7 @@ namespace Simple.MailServer.Smtp
         {
 			await SendGreetingAsync(connection, Greeting ?? Configuration.DefaultGreeting + " " + System.DateTime.Now.ToString("R") );
 
-            var sessionInfoParseResponder = new SmtpSessionInfoResponder(session.ResponderFactory, session.SessionInfo);
+			var sessionInfoParseResponder = new SmtpSessionInfoResponder(session.ResponderFactory, session.SessionInfo);
 
             var rawLineDecoder = new RawLineDecoder(connection);
             rawLineDecoder.RequestDisconnection += (s, e) =>
@@ -199,23 +216,22 @@ namespace Simple.MailServer.Smtp
             rawLineDecoder.DetectedActivity += (s, e) => session.UpdateActivity();
             rawLineDecoder.ProcessLineCommand += async (s, e) =>
             {
-                // ReSharper disable PossibleUnintendedReferenceComparison
                 var response = sessionInfoParseResponder.ProcessLineCommand(e.Buffer);
-                if (response == SmtpResponse.None) return;
+                if (response == null || !response.HasValue) return;
 
-                if (response == SmtpResponse.Disconnect)
+                if (response.ResponseCode == SmtpResponses.DisconnectResponseCode)
                 {
                     await SendResponseAsync(connection, response);
 
                     MailServerLogger.Instance.Debug(String.Format("Remote connection disconnected {0}", connection.RemoteEndPoint));
                     rawLineDecoder.Cancel();
-                    session.Disconnect();
+                    await Task.Delay(100).ContinueWith(t => session.Disconnect());
                     return;
                 }
 				if(response == SmtpResponse.StartTLS)
 				{
 					await SendResponseAsync(connection, response);
-					session.starttls();
+					//session.starttls();
 				}
                 // ReSharper restore PossibleUnintendedReferenceComparison
 

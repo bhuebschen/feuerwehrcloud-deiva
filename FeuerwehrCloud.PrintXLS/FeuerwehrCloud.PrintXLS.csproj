@@ -56,9 +56,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
       <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

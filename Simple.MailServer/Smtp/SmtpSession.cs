@@ -22,12 +22,12 @@
 
 using System;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public class SmtpSession : BaseSession
     {
         public ISmtpResponderFactory ResponderFactory { get; set; }
-        public SmtpSessionInfo SessionInfo { get; set; }
+        public ISmtpSessionInfo SessionInfo { get; set; }
 
         public SmtpSession(SmtpConnection connection, ISmtpResponderFactory responderFactory)
             : base(connection)

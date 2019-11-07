@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Logging;
+using SMTPd.Logging;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -28,7 +28,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 //using Mono.Security.Protocol.Tls;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     [DebuggerDisplay("{ListenAddress}:{Port}")]
     public class PortListener : IDisposable

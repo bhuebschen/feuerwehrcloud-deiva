@@ -52,5 +52,11 @@ namespace D.Net.EmailInterfaces
         }
 
         void LoadInfos();
+		void SetUnread();
+		void SetRead();
+        void SetDeleted(string TC);
+		void SetAnswered();
+		void SetUnrecent();
+
     }
 }

@@ -4,27 +4,50 @@ using System.Net.Sockets;
 using FeuerwehrCloud.Plugin;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 
-/*
-
-
-*/
-using System.ComponentModel;
-
-
-namespace FeuerwehrCloud.Output.WOL
+namespace FeuerwehrCloud.Output
 {
-	public class MagicPacket : IPlugin
+    
+    public class WakeOnLan : IPlugin
 	{
 
 		public event PluginEvent Event;
 
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+
+		public string Name {
+			get {
+				return "WakeOnLan";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "WakeUp on LAN-Sender";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("6");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Output.WakeOnLan).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
 
 		public bool Initialize(IHost hostApplication) {
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WakeUp On LAN] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** WakeUp On LAN loaded...");
 			return true;
 		}
 
@@ -40,7 +63,7 @@ namespace FeuerwehrCloud.Output.WOL
 		}
 
 		public void Dispose() {
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WakeUp On LAN] *** Unloading...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  > [WakeUp On LAN] *** Unloading...");
 		}
 
 		public void RaiseFinish(params object[] list) {
@@ -52,11 +75,11 @@ namespace FeuerwehrCloud.Output.WOL
 		}
 
 		public void Execute(params object[] list) {
-			WakeOnLan ((string)(list[0]));
+			WakeUp ((string)(list[0]));
 		}
 
 
-		public MagicPacket ()
+		public WakeOnLan ()
 		{
 		}
 	
@@ -72,66 +95,44 @@ namespace FeuerwehrCloud.Output.WOL
 
 			return hexres.ToArray();
 		}
-		private void WakeOnLan(string mac)
+		private void WakeUp(string mac)
 		{
-			WakeOnLan (StrToByteArray (mac));
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WakeUp On LAN] *** Waking Up " + mac);
+			WakeUp (StrToByteArray (mac));
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  > [WakeUp On LAN] *** Waking Up " + mac);
 		}
 
-		private void WakeOnLan(byte[] mac)
+		private void WakeUp(byte[] mac)
 		{
-			// WOL packet is sent over UDP 255.255.255.0:40000.
 			UdpClient client = new UdpClient();
 			client.Connect(IPAddress.Broadcast, 40000);
-
-			// WOL packet contains a 6-bytes trailer and 16 times a 6-bytes sequence containing the MAC address.
 			byte[] packet = new byte[17*6];
-
-			// Trailer of 6 times 0xFF.
 			for (int i = 0; i < 6; i++)
 				packet[i] = 0xFF;
-
-			// Body of magic packet contains 16 times the MAC address.
 			for (int i = 1; i <= 16; i++)
 				for (int j = 0; j < 6; j++)
 					packet[i*6 + j] = mac[j];
-
-			// Send WOL packet.
 			client.Send(packet, packet.Length);
-		}
-	}
+		
+			client = new UdpClient();
+			client.Connect(IPAddress.Broadcast, 7);
+			client.Send(packet, packet.Length);
 
-	#region Actitity
-	public class WakeUpOnLANActivityValidator : System.Workflow.ComponentModel.Compiler.ActivityValidator
-	{
-	}
+			client = new UdpClient();
+			client.Connect(IPAddress.Broadcast, 9);
+			client.Send(packet, packet.Length);
 
-	[System.Workflow.ComponentModel.Compiler.ActivityValidator(typeof(WakeUpOnLANActivityValidator))]
-	[System.Drawing.ToolboxBitmap(typeof(WakeUpOnLANActivity), "wol.ico")]
-	public class WakeUpOnLANActivity : System.Workflow.ComponentModel.Activity
-	{
-		public WakeUpOnLANActivity ()  {
-			this.Name = "WakeUpOnLANActivity";
+		
 		}
 
-		public static System.Workflow.ComponentModel.DependencyProperty MacAddressProperty = System.Workflow.ComponentModel.DependencyProperty.Register(
-			"Dateiname", typeof(string), typeof(WakeUpOnLANActivity));
-		[Description("Legt die MAC-Adresse des Systems fest das geweckt werden soll")]
-		[Category("Activity")]
-		[Browsable(true)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-		public string MacAddress
-		{
-			get
-			{
-				return ((string)base.GetValue(MacAddressProperty));
-			}
-			set
-			{
-				base.SetValue(MacAddressProperty, value);
-			}
+	}
+
+	class MagicPackets : UdpClient {
+		public MagicPackets() : base() {
+		}
+
+		public void SetClientToBrodcastMode() {
+			if(this.Active) this.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 0);
 		}
 	}
-	#endregion
 }
 

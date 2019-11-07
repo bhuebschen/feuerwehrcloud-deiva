@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Simple.MailServer")]
+[assembly: AssemblyTitle("SMTPd")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 
@@ -39,4 +39,4 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("7386311f-8996-4b4a-a484-21bad494d40c")]
 
-[assembly: InternalsVisibleTo("Simple.MailServer.Tests")]
+[assembly: InternalsVisibleTo("SMTPd.Tests")]

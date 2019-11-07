@@ -21,10 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public interface IRespondToSmtpVerify
     {
-        SmtpResponse Verify(SmtpSessionInfo sessionInfo, string arguments);
+        SmtpResponse Verify(ISmtpSessionInfo sessionInfo, string arguments);
     }
 }

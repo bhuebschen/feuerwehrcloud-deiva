@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle ("FeuerwehrCloud.Output.Mail")]
-[assembly: AssemblyDescription ("")]
+[assembly: AssemblyDescription ("Modul für den Mailversand")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("soomba GmbH")]
-[assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Copyright (C) 2014 soomba GmbH. All rights reserved.")]
+[assembly: AssemblyCompany ("FeuerwehrCloud")]
+[assembly: AssemblyProduct ("DEIVA")]
+[assembly: AssemblyCopyright ("Copyright (C) 2014-2015 FeuerwehrCloud. All rights reserved.")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 

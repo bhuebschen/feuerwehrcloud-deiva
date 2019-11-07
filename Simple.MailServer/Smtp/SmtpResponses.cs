@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 #endregion
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public static class SmtpResponses
     {

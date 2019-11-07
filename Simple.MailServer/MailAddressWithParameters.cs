@@ -26,7 +26,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Mail;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public class MailAddressWithParameters
     {

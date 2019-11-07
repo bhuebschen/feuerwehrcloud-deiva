@@ -24,7 +24,7 @@ using System.Reflection;
 
 #endregion
 
-using Simple.MailServer.Mime;
+using SMTPd.Mime;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -42,7 +42,7 @@ using System.Threading.Tasks;
 //using Mono.Security.Authenticode;
 //using Mono.Security.Protocol.Tls;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     [DebuggerDisplay("{RemoteEndPoint} -> {PortBinding}")]
     public abstract class BaseConnection : IClientConnection, ICanReadLineAsync
@@ -104,7 +104,7 @@ namespace Simple.MailServer
             RemoteEndPoint = (IPEndPoint)tcpClient.Client.RemoteEndPoint;
         }
 
-        public abstract long GetIdleTimeMilliseconds();
+        public abstract TimeSpan GetIdleTime();
 
         public async Task<byte[]> ReadLineAsync(CancellationToken cancellationToken)
         {
@@ -125,7 +125,7 @@ namespace Simple.MailServer
 				await SSLWriter.WriteLineAsync(line);
 			} else {
 				RawLineSent(this, new RawLineEventArgs(Writer.Encoding.GetBytes(line)));
-				await Writer.WriteLineAsync(line);
+                await TextWriter.Synchronized(Writer).WriteLineAsync(line);
 			}
         }
 			

@@ -7,6 +7,7 @@ namespace FeuerwehrCloud.PrintImage
 {
 	class MainClass
 	{
+		[System.Runtime.InteropServices.ComVisible (false)]
 		public static void Main (string[] Pages)
 		{
 			Application.Init ();
@@ -18,7 +19,7 @@ namespace FeuerwehrCloud.PrintImage
 			print.BeginPrint += (obj2, args) => { print.NPages = Pages.Length; };
 			print.DrawPage += (obj2, args) => {
 				try {
-					de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [ImagePrinter] *** Page " + args.PageNr.ToString() + " of " + Pages.Length.ToString());
+					FeuerwehrCloud.Helper.Logger.WriteLine ("|  > [ImagePrinter] *** Page " + args.PageNr.ToString() + " of " + Pages.Length.ToString());
 					var imageBit = default(byte[]);
 					var image = System.Drawing.Image.FromFile("/tmp/"+Pages[args.PageNr]);
 					using (var memoryStream = new MemoryStream()) {
@@ -36,16 +37,16 @@ namespace FeuerwehrCloud.PrintImage
 							((IDisposable) cr).Dispose();
 
 						} catch (Exception ex4) {
-							de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-> [ImagePrinter] *** ERROR: " +ex4.ToString());
+							FeuerwehrCloud.Helper.Logger.WriteLine("|||  > [ImagePrinter] *** ERROR: " +ex4.ToString());
 						}							
 					} catch (Exception ex5) {
-						de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-> [ImagePrinter] *** ERROR: " +ex5.ToString());
+						FeuerwehrCloud.Helper.Logger.WriteLine("|||  > [ImagePrinter] *** ERROR: " +ex5.ToString());
 					}
 				} catch (Exception ex3) {
-					de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-> [ImagePrinter] *** ERROR: " +ex3.ToString());
+					FeuerwehrCloud.Helper.Logger.WriteLine("||| > [ImagePrinter] *** ERROR: " +ex3.ToString());
 				}
 			};
-			print.EndPrint += (obj2, args) => { de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [ImagePrinter] *** Printing finished "); Application.Quit(); };
+			print.EndPrint += (obj2, args) => { FeuerwehrCloud.Helper.Logger.WriteLine ("|  > [ImagePrinter] *** Printing finished "); Application.Quit(); };
 			print.Run(Gtk.PrintOperationAction.Print, null);
 		}
 	}

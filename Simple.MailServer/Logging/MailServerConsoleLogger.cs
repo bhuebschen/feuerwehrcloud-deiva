@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Simple.MailServer.Logging
+namespace SMTPd.Logging
 {
     public class MailServerConsoleLogger : IMailServerLogger
     {
@@ -37,42 +37,42 @@ namespace Simple.MailServer.Logging
         {
             if (LogLevel < MailServerLogLevel.Debug) return;
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** {0}: DEBUG - {1}", GetTimestamp(), message);
+			FeuerwehrCloud.Helper.Logger.WriteLine("||||  < [SMTPServer] *** {0}: DEBUG - {1}", GetTimestamp(), message);
         }
 
         public void Info(string message)
         {
             if (LogLevel < MailServerLogLevel.Info) return;
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** {0}: INFO - {1}", GetTimestamp(), message);
+			FeuerwehrCloud.Helper.Logger.WriteLine("|  < [SMTPServer] *** {0}: INFO - {1}", GetTimestamp(), message);
         }
 
         public void Warn(string message)
         {
             if (LogLevel < MailServerLogLevel.Warn) return;
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** {0}: WARN - {1}", GetTimestamp(), message);
+			FeuerwehrCloud.Helper.Logger.WriteLine("||  < [SMTPServer] *** {0}: WARN - {1}", GetTimestamp(), message);
         }
 
         public void Error(string message)
         {
             if (LogLevel < MailServerLogLevel.Error) return;
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] !!! {0}: ERROR - {1}", GetTimestamp(), message);
+			FeuerwehrCloud.Helper.Logger.WriteLine("|||  < [SMTPServer] !!! {0}: ERROR - {1}", GetTimestamp(), message);
         }
 
         public void Error(Exception ex)
         {
             if (LogLevel < MailServerLogLevel.Error) return;
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] !!! {0}: ERROR - Exception: {1}", GetTimestamp(), ex);
+			FeuerwehrCloud.Helper.Logger.WriteLine("|||  < [SMTPServer] !!! {0}: ERROR - Exception: {1}", GetTimestamp(), ex);
         }
 
         public void Error(Exception ex, string message)
         {
             if (LogLevel < MailServerLogLevel.Error) return;
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] !!! {0}: ERROR - {1}, Exception: {2}", GetTimestamp(), message, ex);
+			FeuerwehrCloud.Helper.Logger.WriteLine("|||  < [SMTPServer] !!! {0}: ERROR - {1}, Exception: {2}", GetTimestamp(), message, ex);
         }
 
         private string GetTimestamp()

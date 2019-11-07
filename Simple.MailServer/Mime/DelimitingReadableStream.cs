@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public class DelimitingReadableStream : Stream
     {

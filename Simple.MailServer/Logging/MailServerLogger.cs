@@ -21,11 +21,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-namespace Simple.MailServer.Logging
+namespace SMTPd.Logging
 {
     public static class MailServerLogger
     {
-        private static IMailServerLogger _instance = new MailServerDebugLogger(MailServerLogLevel.Debug);
+        private static IMailServerLogger _instance = new MailServerDebugLogger(MailServerLogLevel.Info);
         public static IMailServerLogger Instance
         {
             get { return _instance; }

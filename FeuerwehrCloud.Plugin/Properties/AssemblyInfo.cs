@@ -6,11 +6,14 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle ("FeuerwehrCloud.Plugin")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("SYStemiya - Jasmin Hübschen-Kabuth")]
-[assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Copyright © 2009-2013 SYStemiya - Alle Rechte vorbehalten.")]
+[assembly: AssemblyCompany ("FeuerwehrCloud")]
+[assembly: AssemblyProduct ("DEIVA")]
+[assembly: AssemblyCopyright ("Copyright (C) 2014-2015 FeuerwehrCloud. All rights reserved.")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
+[assembly: System.CLSCompliant(true)]
+[assembly: System.Runtime.InteropServices.ComVisible(false)]
+
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.

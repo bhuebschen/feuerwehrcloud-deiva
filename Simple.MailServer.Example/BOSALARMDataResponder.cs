@@ -1,5 +1,5 @@
-using Simple.MailServer.Smtp;
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp;
+using SMTPd.Smtp.Config;
 using System;
 using System.IO;
 using System.Text;
@@ -10,14 +10,14 @@ using System.Net.Sockets;
 
 namespace FeuerwehrCloud
 {
-	class BOSSMTPDataResponder : DefaultSmtpDataResponder<ISmtpServerConfiguration>
+	class BOSSMTPDataResponder : SmtpDataResponder
 	{
 		private readonly string _mailDir;
 		System.IO.MemoryStream FS;
-		FeuerwehrCloud.Input.SMTP.SMTPSever ParentPlugin;
+		FeuerwehrCloud.Input.SMTPServer ParentPlugin;
 		private System.Collections.Generic.Dictionary<string, string> BOSConfig = new System.Collections.Generic.Dictionary<string, string> ();
 
-		public BOSSMTPDataResponder(ISmtpServerConfiguration configuration, string mailDir, FeuerwehrCloud.Input.SMTP.SMTPSever ServerObject)
+		public BOSSMTPDataResponder(ISmtpServerConfiguration configuration, string mailDir, FeuerwehrCloud.Input.SMTPServer ServerObject)
 			: base(configuration)
 		{
 			ParentPlugin = ServerObject;
@@ -27,13 +27,13 @@ namespace FeuerwehrCloud
 
 			if(!System.IO.File.Exists("ILS.cfg")) {
 				BOSConfig.Add ("Target", "");
-				de.SYStemiya.Helper.AppSettings.Save(BOSConfig,"ILS.cfg");
+				FeuerwehrCloud.Helper.AppSettings.Save(BOSConfig,"ILS.cfg");
 			} 
-			BOSConfig = de.SYStemiya.Helper.AppSettings.Load ("ILS.cfg");
+			BOSConfig = FeuerwehrCloud.Helper.AppSettings.Load ("ILS.cfg");
 
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** Waiting for Fax from:");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] *** Waiting for Fax from:");
 			foreach (var item in BOSConfig.Values) {
-				de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer]     " + item);
+				FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer]     " + item);
 			}
 
 			_mailDir = mailDir;
@@ -47,14 +47,14 @@ namespace FeuerwehrCloud
 			//Mono.Posix.Syscall.chmod(directory, Mono.Posix.FileMode.)
 		}
 
-		public override SmtpResponse DataStart(SmtpSessionInfo sessionInfo)
+		public override SmtpResponse DataStart(ISmtpSessionInfo sessionInfo)
 		{
-			//de.SYStemiya.Helper.Logger.WriteLine("Start receiving mail: {0}", GetFileNameFromSessionInfo(sessionInfo));
+			//FeuerwehrCloud.Helper.Logger.WriteLine("Start receiving mail: {0}", GetFileNameFromSessionInfo(sessionInfo));
 			FS = new MemoryStream ();
 			return SmtpResponse.DataStart;
 		}
 
-		private string GetFileNameFromSessionInfo(SmtpSessionInfo sessionInfo)
+		private string GetFileNameFromSessionInfo(ISmtpSessionInfo sessionInfo)
 		{
 			var fileName = sessionInfo.CreatedTimestamp.ToString("yyyy-MM-dd_HHmmss_fff") + ".eml";
 			var fullName = Path.Combine(_mailDir, fileName);
@@ -62,7 +62,7 @@ namespace FeuerwehrCloud
 
 		}
 
-		public override SmtpResponse DataLine(SmtpSessionInfo sessionInfo, byte[] lineBuf)
+		public override SmtpResponse DataLine(ISmtpSessionInfo sessionInfo, byte[] lineBuf)
 		{
 			var fileName = GetFileNameFromSessionInfo(sessionInfo);
 			FS.Write(lineBuf, 0, lineBuf.Length);
@@ -71,7 +71,7 @@ namespace FeuerwehrCloud
 			return SmtpResponse.None;
 		}
 
-		public override SmtpResponse DataEnd(SmtpSessionInfo sessionInfo)
+		public override SmtpResponse DataEnd(ISmtpSessionInfo sessionInfo)
 		{
 			var fileName = GetFileNameFromSessionInfo(sessionInfo);
 			using (var stream = File.OpenWrite (fileName)) {
@@ -82,25 +82,30 @@ namespace FeuerwehrCloud
 			var size = FS.Length;
 			var successMessage = String.Format("{0} bytes received", size);
 			var response = SmtpResponse.OK.CloneAndChange(successMessage);
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** Finished receiving eMail");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] *** Finished receiving eMail");
 			System.Threading.Thread NWorker = new System.Threading.Thread (new System.Threading.ParameterizedThreadStart (delegate(object obj) {
 				try {
-					de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** Pass Message to MimeLoader");
+					FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] *** Pass Message to MimeLoader");
 					FS.Seek(0, SeekOrigin.Begin);
 					FeuerwehrCloud.Mime.Message M =  FeuerwehrCloud.Mime.Message.Load(FS); //new FileInfo((string)obj));
 					System.Collections.Generic.List<FeuerwehrCloud.Mime.MessagePart> attachments = M.FindAllAttachments();
-					de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] ***** Loop trough Parts");
+					FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ***** Loop trough Parts");
 					foreach (FeuerwehrCloud.Mime.MessagePart attachment in attachments)
 					{
 
 						// Only extract Text if from ILS!
 						// Has PDF-Attachment?
-						de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] ****** Has PDF-Attachment?");
+						FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ****** Has PDF-Attachment?");
 						if(attachment.FileName.EndsWith(".pdf", StringComparison.InvariantCultureIgnoreCase)) {
 							try {
 								// Extract PDF to /tmp/
-								de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] ******* Safe PDF to " + "/tmp/"+attachment.FileName);
+								FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ******* Safe PDF to " + "/tmp/"+attachment.FileName);
 								attachment.Save(new FileInfo("/tmp/"+attachment.FileName));
+								try {
+									System.IO.File.Copy ("/tmp/"+attachment.FileName, "public/fax/" + attachment.FileName, true);
+								} catch (Exception ex) {
+									FeuerwehrCloud.Helper.Logger.WriteLine(FeuerwehrCloud.Helper.Helper.GetExceptionDescription(ex));
+								}
 								int count = 0;
 
 								// Print PDF!
@@ -125,9 +130,11 @@ namespace FeuerwehrCloud
 
 								if(XSubject.StartsWith("Fax von")) {
 									XSubject = XSubject.Substring(XSubject.LastIndexOf(" ", StringComparison.InvariantCultureIgnoreCase)+1).Trim();
-									de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] ***** Is FAX-Number of ILS?");
+									FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ***** Is FAX-Number of ILS? " + (XSubject==""?"No number supplied...":XSubject));
+
 									if(BOSConfig.ContainsValue(XSubject)) {
-										// Extract Image from PDF
+										FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ******* ILS-Number detected!");
+										// Notify running Display-Software!
 										new System.Threading.Thread(delegate() {
 											try {
 												System.Net.Sockets.TcpClient TC = new TcpClient();
@@ -135,11 +142,12 @@ namespace FeuerwehrCloud
 												TC.GetStream().Write(System.Text.Encoding.Default.GetBytes("GET / HTTP/1.0\r\n\r\n"),0,18);
 												TC.Close();
 											} catch (Exception ex) {
-												
+
 											}
 										}).Start();
 
-										de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] ******* Extract PNG from PDF!");
+										// Extract Image from PDF
+										FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ********* Extract PNG from PDF!");
 										P = new System.Diagnostics.Process();
 										P.StartInfo.FileName=FeuerwehrCloud.Input.SMTP.Properties.Settings.Default.mutool_path;
 										P.StartInfo.WorkingDirectory = "/tmp/";
@@ -156,31 +164,33 @@ namespace FeuerwehrCloud
 											Pages[i] =  Pages[i].Substring(Pages[i].IndexOf("image ", StringComparison.OrdinalIgnoreCase)+6);
 										}
 										ParentPlugin.RaiseFinish("pictures", Pages);
+									} else {
+										FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [SMTPServer] ******* Does not look like a FAX from ILS...");
 									}
-										}
-										} catch (Exception ex2) {
-											Console.ForegroundColor = ConsoleColor.Red;
-											Console.Write(ex2);
-											Console.ForegroundColor = ConsoleColor.Gray;
-										}
-										}
-										}
-
-										FS = new MemoryStream ();
-										} catch (Exception ex) {
-											Console.ForegroundColor = ConsoleColor.Red;
-											Console.Write(ex);
-											Console.ForegroundColor = ConsoleColor.Gray;
-										}
-										de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** Done!");
-										}));
-									NWorker.Start(fileName);		
-									return response;
 								}
-
-								private long GetFileSize(string fileName)
-								{
-									return new FileInfo(fileName).Length;
-								}
+							} catch (Exception ex2) {
+								Console.ForegroundColor = ConsoleColor.Red;
+								FeuerwehrCloud.Helper.Logger.WriteLine(FeuerwehrCloud.Helper.Helper.GetExceptionDescription(ex2));
+								Console.ForegroundColor = ConsoleColor.Gray;
 							}
 						}
+					}
+
+					FS = new MemoryStream ();
+				} catch (Exception ex) {
+					Console.ForegroundColor = ConsoleColor.Red;
+					FeuerwehrCloud.Helper.Logger.WriteLine(FeuerwehrCloud.Helper.Helper.GetExceptionDescription(ex));
+					Console.ForegroundColor = ConsoleColor.Gray;
+				}
+				FeuerwehrCloud.Helper.Logger.WriteLine("|  < [SMTPServer] *** Done!");
+			}));
+			NWorker.Start(fileName);		
+			return response;
+		}
+
+		private long GetFileSize(string fileName)
+		{
+			return new FileInfo(fileName).Length;
+		}
+	}
+}

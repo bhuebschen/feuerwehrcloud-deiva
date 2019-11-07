@@ -18,21 +18,24 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System.Linq;
+
+
 #endregion
 
-using Simple.MailServer.Logging;
+using SMTPd.Logging;
 using System;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-	internal class SmtpSessionInfoResponder : SmtpCommandParser
+    class SmtpSessionInfoResponder : SmtpCommandParser
     {
 
-        public SmtpSessionInfo SessionInfo { get; private set; }
+		public ISmtpSessionInfo SessionInfo { get; private set; }
         
         private readonly ISmtpResponderFactory _responderFactory;
 
-        public SmtpSessionInfoResponder(ISmtpResponderFactory responderFactory, SmtpSessionInfo sessionInfo)
+        public SmtpSessionInfoResponder(ISmtpResponderFactory responderFactory, ISmtpSessionInfo sessionInfo)
         {
             if (responderFactory == null) throw new ArgumentNullException("responderFactory");
             if (sessionInfo == null) throw new ArgumentNullException("sessionInfo");
@@ -53,13 +56,13 @@ namespace Simple.MailServer.Smtp
         {
             // ReSharper disable PossibleUnintendedReferenceComparison
             var notIdentified = CreateResponseIfNotIdentified();
-            if (notIdentified != SmtpResponse.None) return notIdentified;
+            if (notIdentified.HasValue) return notIdentified;
 
             var hasNotMailFrom = CreateResponseIfHasNotMailFrom();
-            if (hasNotMailFrom != SmtpResponse.None) return hasNotMailFrom;
+            if (hasNotMailFrom.HasValue) return hasNotMailFrom;
 
             var hasNoRecipients = CreateResponseIfHasNoRecipients();
-            if (hasNoRecipients != SmtpResponse.None) return hasNotMailFrom;
+            if (hasNoRecipients.HasValue) return hasNoRecipients;
             // ReSharper restore PossibleUnintendedReferenceComparison
 
             var response = _responderFactory.DataResponder.DataStart(SessionInfo);
@@ -112,14 +115,14 @@ namespace Simple.MailServer.Smtp
         protected override SmtpResponse ProcessCommandMailFrom(string name, string arguments)
         {
             var notIdentified = CreateResponseIfNotIdentified();
-            if (notIdentified != SmtpResponse.None) return notIdentified;
+            if (notIdentified.HasValue) return notIdentified;
 
             var mailFrom = arguments.Trim();
             MailAddressWithParameters mailAddressWithParameters;
             try { mailAddressWithParameters = MailAddressWithParameters.Parse(mailFrom); }
             catch (FormatException)
             {
-                return SmtpResponse.SyntaxError;
+                return SmtpResponses.SyntaxError;
             }
 
             var response = _responderFactory.MailFromResponder.VerifyMailFrom(SessionInfo, mailAddressWithParameters);
@@ -133,28 +136,28 @@ namespace Simple.MailServer.Smtp
 
         protected override SmtpResponse ProcessCommandNoop(string name, string arguments)
         {
-            return SmtpResponse.OK;
+            return SmtpResponses.OK;
         }
 
         protected override SmtpResponse ProcessCommandQuit(string name, string arguments)
         {
-            return SmtpResponse.Disconnect;
+            return SmtpResponses.Disconnect;
         }
 
         protected override SmtpResponse ProcessCommandRcptTo(string name, string arguments)
         {
             var notIdentified = CreateResponseIfNotIdentified();
-            if (notIdentified != SmtpResponse.None) return notIdentified;
+            if (notIdentified.HasValue) return notIdentified;
 
             var hasNotMailFrom = CreateResponseIfHasNotMailFrom();
-            if (hasNotMailFrom != SmtpResponse.None) return hasNotMailFrom;
+            if (hasNotMailFrom.HasValue) return hasNotMailFrom;
 
             var recipient = arguments.Trim();
             MailAddressWithParameters mailAddressWithParameters;
             try { mailAddressWithParameters = MailAddressWithParameters.Parse(recipient); }
             catch (FormatException)
             {
-                return SmtpResponse.SyntaxError;
+                return SmtpResponses.SyntaxError;
             }
 
             var response = _responderFactory.RecipientToResponder.VerifyRecipientTo(SessionInfo, mailAddressWithParameters);
@@ -179,43 +182,61 @@ namespace Simple.MailServer.Smtp
 
 		protected override SmtpResponse ProcessCommandLIC (string name, string arguments)
 		{
-			return new SmtpResponse (250, "Licensed for Freiwillige Feuerwehr Neubeuern");
+			return new SmtpResponse (250, "Licensed for " ); //+ System.IO.File.ReadAllLines("")[0]
 		}
 
 		protected override SmtpResponse ProcessCommandXVRB (string name, string arguments)
 		{
-			throw new NotImplementedException ();
+			return SmtpResponse.NotImplemented;
 		}
 
 		protected override SmtpResponse ProcessCommandSAML (string name, string arguments)
 		{
-			throw new NotImplementedException ();
+			ProcessCommandRcptTo(name, arguments);
+			return SmtpResponse.NotImplemented;
 		}
 
 		protected override SmtpResponse ProcessCommandSOML (string name, string arguments)
 		{
-			throw new NotImplementedException ();
+			ProcessCommandRcptTo(name, arguments);
+			return SmtpResponse.NotImplemented;
 		}
 
 		protected override SmtpResponse ProcessCommandEhSC (string name, string arguments)
 		{
-			throw new NotImplementedException ();
+			return SmtpResponse.NotImplemented;
 		}
 
 		protected override SmtpResponse ProcessCommandPush (string name, string arguments)
 		{
-			throw new NotImplementedException ();
+			return new SmtpResponse(502, "Command not implemented (#5.5.2)", new System.Collections.Generic.List<string> {{
+					"Use FeuerwehrCloud.Input.SMTPSever.lua!"
+				}
+			});
 		}
 
 		protected override SmtpResponse ProcessCommandHelp (string name, string arguments)
 		{
-			throw new NotImplementedException ();
+			return new SmtpResponse (502, "There's no help!", new System.Collections.Generic.List<string> {{
+					"You should not use this SMTP-Server for testing purposes!"
+				}
+			});
+		}
+
+		protected override SmtpResponse ProcessCommandDBY(string name, string arguments)
+		{
+			throw new NotImplementedException();
+		}
+
+		protected override SmtpResponse ProcessCommandLR(string name, string arguments)
+		{
+			throw new NotImplementedException();
 		}
 
         protected override SmtpResponse ProcessCommandVrfy(string name, string arguments)
         {
             var notIdentified = CreateResponseIfNotIdentified();
-            if (notIdentified != SmtpResponse.None) return notIdentified;
+            if (notIdentified.HasValue) return notIdentified;
 
             if (String.IsNullOrWhiteSpace(arguments))
             {
@@ -230,9 +251,9 @@ namespace Simple.MailServer.Smtp
         {
             if (SessionInfo.Identification.Mode == SmtpIdentificationMode.NotIdentified)
             {
-                return SmtpResponse.NotIdentified;
+                return SmtpResponses.NotIdentified;
             }
-            return SmtpResponse.None;
+            return SmtpResponses.None;
         }
 
         private SmtpResponse CreateResponseIfHasNotMailFrom()
@@ -246,11 +267,9 @@ namespace Simple.MailServer.Smtp
 
         private SmtpResponse CreateResponseIfHasNoRecipients()
         {
-            if (SessionInfo.Recipients.Count <= 0)
-            {
-				return new SmtpResponse(503, "Must have recipient first (#5.5.1)");
-            }
-            return SmtpResponse.None;
+            return !SessionInfo.Recipients.Any() 
+                ? SmtpResponses.MustHaveRecipientFirst 
+                : SmtpResponses.None;
         }
 
         protected override SmtpResponse ProcessRawLine(string line)

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F0D767AF-EC2E-4D90-8FDF-04F7FA10E68A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FeuerwehrCloud.General.BackupRestore</RootNamespace>
+    <RootNamespace>FeuerwehrCloud.General</RootNamespace>
     <AssemblyName>FeuerwehrCloud.General.BackupRestore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -29,10 +29,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Ionic.BZip2">
+      <HintPath>..\Ionic.BZip2.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\Ionic.Zip.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>FeuerwehrCloud.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
+      <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
+      <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

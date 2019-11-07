@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace Simple.MailServer.Smtp.Capabilities
+namespace SMTPd.Capabilities
 {
     public interface IGetSmtpCapabilities
     {

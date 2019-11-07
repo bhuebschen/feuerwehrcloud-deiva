@@ -25,7 +25,7 @@
 
 using System;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public class XamarinEmailValidator : IEmailValidator
     {

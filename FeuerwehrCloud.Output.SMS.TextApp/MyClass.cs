@@ -1,9 +1,12 @@
 ﻿using System;
 using FeuerwehrCloud.Plugin;
+using TextApp.SMS.www.textapp.net;
+using System.IO;
+using System.Reflection;
 
-namespace FeuerwehrCloud.Output.SMS
+namespace FeuerwehrCloud.Output
 {
-	public class SMS : IPlugin
+	public class TextApp : IPlugin
 	{
 		#region IPlugin implementation
 
@@ -11,20 +14,47 @@ namespace FeuerwehrCloud.Output.SMS
 
 		public event PluginEvent Event;
 
+		public string Name {
+			get {
+				return "TextApp";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "TextApp SMS-Modul";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("A");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Output.TextApp).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
+
+
 		public bool Initialize (IHost hostApplication)
 		{
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [TextApp SMS] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** TextApp SMS loaded...");
 			return true;	
 		}
 
 		public void Execute (params object[] list)
 		{
 
-			TextApp.SMS.www.textapp.net.Service mySMS = new TextApp.SMS.www.textapp.net.Service ();
+			Service mySMS = new Service ();
 			string Message = ((string)list [1]);
 			string x = mySMS.TestSendSMS (false, "benedikt.huebschen@systemiya.de", "01012000", "Feuerwehr Neubeuern", "", "+4980353749", "+491739561779", Message, Message.Length, 2, 4, "", "");
-			de.SYStemiya.Helper.Logger.WriteLine (">>" + x);
+			FeuerwehrCloud.Helper.Logger.WriteLine (">>" + x);
 		}
 
 		public bool IsAsync {
@@ -50,7 +80,7 @@ namespace FeuerwehrCloud.Output.SMS
 
 		#endregion
 
-		public SMS ()
+		public TextApp ()
 		{
 		}
 	}

@@ -24,7 +24,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public interface IClientConnection : ICanDisconnect, IHaveIdleTimeSpan
     {

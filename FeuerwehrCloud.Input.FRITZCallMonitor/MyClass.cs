@@ -4,13 +4,43 @@ using System.Net.NetworkInformation;
 using FeuerwehrCloud.Plugin;
 using System.Net.Sockets;
 using System.Text;
+using System.IO;
+using System.Reflection;
 
-namespace FeuerwehrCloud.Input.FRITZCallMonitor
+namespace FeuerwehrCloud.Input
 {
 	public class FRITZCallMonitor: IPlugin
 	{
 		#region IPlugin implementation
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+
+		public string Name {
+			get {
+				return "FRITZCallMonitor";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "FRITZ!Box Anrufmonitor";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid (Name);
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Input.FRITZCallMonitor).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
+
 
 		public event PluginEvent Event;
 		public static System.Net.Sockets.TcpClient FBC;
@@ -37,18 +67,27 @@ namespace FeuerwehrCloud.Input.FRITZCallMonitor
 
 		}
 
-		private static async void ConnectAsTcpClient()
+		public void RaiseFinish(params object[] list) {
+			PluginEvent messageSent = Event;
+			if (messageSent != null)
+			{
+				messageSent(this, list);
+
+			}
+		}
+
+		private static async void ConnectAsTcpClient(object iHost)
 		{
 			try {
 				System.Net.WebClient WC = new WebClient ();
 				string RESULT = WC.DownloadString ("http://" + FRITZCallMonitor.Gw.ToString ());
 				if (RESULT.IndexOf ("FRITZ!Box", StringComparison.OrdinalIgnoreCase) > 0) {
 					FBC = new System.Net.Sockets.TcpClient ();
-
+					FRITZCallMonitor iH = (FRITZCallMonitor)iHost;
 					using (var tcpClient = new TcpClient ()) {
-						de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** FRITZ!Box found at " + FRITZCallMonitor.Gw.ToString () + ", trying to attach to CallMonitor");
+						FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** FRITZ!Box found at " + FRITZCallMonitor.Gw.ToString () + ", trying to attach to CallMonitor");
 						await tcpClient.ConnectAsync (FRITZCallMonitor.Gw, 1012);
-						de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** CallMonitor attached, waiting for calls...");
+						FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** CallMonitor attached, waiting for calls...");
 						using (var networkStream = tcpClient.GetStream ()) {
 							do {
 								var buffer = new byte[4096];
@@ -57,27 +96,32 @@ namespace FeuerwehrCloud.Input.FRITZCallMonitor
 								string[] rLine = response.Split (new [] { ";" }, StringSplitOptions.None);
 								switch (rLine [1]) {
 								case "CALL":
-									de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** Outgoing call with " + rLine [3] + "/" + rLine [4] + " to: " + rLine [5]);
+									FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Outgoing call with " + rLine [3] + "/" + rLine [4] + " to: " + rLine [5]);
+									iH.RaiseFinish("text", rLine);
 									break;
 								case "RING":
-									de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** Incoming call from: " + rLine [3] + " on number " + rLine [4]);
+									FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Incoming call from: " + rLine [3] + " on number " + rLine [4]);
 									if(BOSConfig.ContainsValue(rLine [3])) {
-										de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** Incoming call FAX FROM ILS! Forcing printer tp warm up...");
+										FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Incoming call FAX FROM ILS! Forcing printer tp warm up...");
 										try {
-											System.Diagnostics.Process.Start("/usr/bin/lp wakeup.txt");
+											// There's a new Method wo wake up the printer -> FeuerwehrCloud.Generic.PrinterStatus
+											//System.Diagnostics.Process.Start("/usr/bin/lp wakeup.txt");
 										} catch (Exception ex) {
 											
 										}
 									}
 									break;
+									iH.RaiseFinish("text", rLine);
 								case "CONNECT":
-									de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** Pickup call: " + rLine [4]);
+									FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Pickup call: " + rLine [4]);
+									iH.RaiseFinish("text", rLine);
 									break;
 								case "DISCONNECT":
-									de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** Hangup call after " + rLine [3]);
+									FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Hangup call after " + rLine [3]);
+									iH.RaiseFinish("text", rLine);
 									break;
 								default:
-									de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** response was {0}", response);
+									FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** response was {0}", response);
 									break;
 								}						
 							} while (Disposing == false);
@@ -92,22 +136,23 @@ namespace FeuerwehrCloud.Input.FRITZCallMonitor
 		public bool Initialize (IHost hostApplication)
 		{
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-< [FRITZCallMonitor] *** Searching for AVM FRITZ!Box...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** FRITZCallMonitor loaded...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Searching for AVM FRITZ!Box...");
 			if(!System.IO.File.Exists("ILS.cfg")) {
 				BOSConfig.Add ("Target", "");
-				de.SYStemiya.Helper.AppSettings.Save(BOSConfig,"ILS.cfg");
+				FeuerwehrCloud.Helper.AppSettings.Save(BOSConfig,"ILS.cfg");
 			} 
-			BOSConfig = de.SYStemiya.Helper.AppSettings.Load ("ILS.cfg");
+			BOSConfig = FeuerwehrCloud.Helper.AppSettings.Load ("ILS.cfg");
 
 			FRITZCallMonitor.Gw = FRITZCallMonitor.GetDefaultGateway ();
 			if (FRITZCallMonitor.Gw == null)
 				FRITZCallMonitor.Gw = IPAddress.Parse ("192.168.172.1");
 			try {
-				M = new System.Threading.Thread ((object obj) => ConnectAsTcpClient ());
-				M.Start ();
+				M = new System.Threading.Thread ((object obj) => ConnectAsTcpClient (obj));
+				M.Start(this);
 				return true;
 			} catch (Exception ex) {
-				de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-< [FRITZCallMonitor] *** Connection to FRITZ!Box timed out...");
+				FeuerwehrCloud.Helper.Logger.WriteLine ("|  < [FRITZCallMonitor] *** Connection to FRITZ!Box timed out...");
 				return false;
 			}
 		}

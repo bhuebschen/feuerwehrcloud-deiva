@@ -24,7 +24,7 @@ using System;
 using System.Globalization;
 using System.IO;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public class QuotedPrintableDecoderStream : Stream
     {

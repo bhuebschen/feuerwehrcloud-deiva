@@ -23,7 +23,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public interface ICanReadLineAsync
     {

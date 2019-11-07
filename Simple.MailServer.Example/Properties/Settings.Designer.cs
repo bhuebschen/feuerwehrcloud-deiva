@@ -43,7 +43,7 @@ namespace FeuerwehrCloud.Input.SMTP.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/usr/bin/lp")]
+        [global::System.Configuration.DefaultSettingValueAttribute("/usr/bin/lpr")]
         public string lp_path {
             get {
                 return ((string)(this["lp_path"]));

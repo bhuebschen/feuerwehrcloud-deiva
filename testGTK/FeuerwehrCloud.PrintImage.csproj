@@ -14,7 +14,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -76,9 +76,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
       <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

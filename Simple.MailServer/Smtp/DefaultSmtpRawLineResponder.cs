@@ -20,22 +20,22 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpRawLineResponder<T> : IRespondToSmtpRawLine where T : IConfiguredSmtpRestrictions
+    public class SmtpRawLineResponder : IRespondToSmtpRawLine
     {
-        protected readonly T Configuration;
+        protected readonly IConfiguredSmtpRestrictions Configuration;
 
-        public DefaultSmtpRawLineResponder(T configuration)
+        public SmtpRawLineResponder(IConfiguredSmtpRestrictions configuration)
         {
             Configuration = configuration;
         }
 
-        public SmtpResponse RawLine(SmtpSessionInfo sessionInfo, string line)
+        public SmtpResponse RawLine(ISmtpSessionInfo sessionInfo, string line)
         {
-            return SmtpResponse.None;
+            return SmtpResponses.None;
         }
     }
 }

@@ -31,18 +31,6 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\RaspberryPiDotNet.XML</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - Windows|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug - Windows\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\RaspberryPiDotNet.XML</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
@@ -60,6 +48,7 @@
     <Compile Include="MicroLiquidCrystal\RaspPiGPIOMemLcdTransferProvider.cs" />
     <Compile Include="MicroLiquidCrystal\ILcdTransferProvider.cs" />
     <Compile Include="MicroLiquidCrystal\Lcd.cs" />
+    <Compile Include="PinState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TM16XX\TM1638.cs" />
     <Compile Include="TM16XX\TM16XX.cs" />
@@ -72,10 +61,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
-      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

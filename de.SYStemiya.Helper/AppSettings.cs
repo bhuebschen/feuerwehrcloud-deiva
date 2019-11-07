@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Script.Serialization;
 
-namespace de.SYStemiya.Helper
+namespace FeuerwehrCloud.Helper
 {
 
+	/// <summary>
+	/// Diese Klasse stellt Funktionen zum Lesen und Schreiben von Konfigurationen zur Verfügung.
+	/// </summary>
 	public static class AppSettings
 	{
+
+		private static string StriPX(string X) {
+			return X.Replace ("\\", "\\\\").Replace ("\n", "\\n").Replace ("\r", "\\r").Replace ("\t", "\\t");
+		}
+
+		/// <summary>
+		/// Speichert Konfigurationsdaten in einer Datei.
+		/// </summary>
+		/// <param name="dictionary">Enthält ein Dictionary<string, string> mit den zu sichernden Werten.</param>
+		/// <param name="fileName">Gibt den Dateiname der Datei an, in der die Konfiguration geschrieben werden soll.</param>
 		public static void Save(Dictionary<string, string> dictionary, string fileName)
 		{
 			try
@@ -22,13 +35,21 @@ namespace de.SYStemiya.Helper
 					foreach (var pair in dictionary)
 					{
 						writer.WriteLine(pair.Key);
-						writer.WriteLine(pair.Value.Replace("\\","\\\\").Replace("\n","\\n").Replace("\r","\\r").Replace("\t","\\t"));
+						writer.WriteLine(StriPX(pair.Value));
 					}
 				}
 
 			}
-			catch (Exception) { }   // If fails - just don't use preferences
+			catch (Exception) { 
+				return;
+			}   // If fails - just don't use preferences
 		}
+
+		/// <summary>
+		/// Liest Konfigurationsdaten aus einer Datei und gibt diese zurück.
+		/// </summary>
+		/// <returns>Die Konfigurationsdaten in einem Dictionary<string, string></returns>
+		/// <param name="fileName">Gibt den Dateiname der Datei an, aus der die Konfigurationsdaten gelesen werden sollen.</param>
 		public static Dictionary<string, string> Load(string fileName)
 		{
 			try
@@ -44,7 +65,7 @@ namespace de.SYStemiya.Helper
 					for (int i = 0; i < count; i++)
 					{
 						string key = reader.ReadLine();
-						string value = reader.ReadLine().Replace("\\\\","\\").Replace("\\n","\n").Replace("\\r","\r").Replace("\\t","\t");
+						string value = StriPX(reader.ReadLine());
 						result[key] = value;
 					}
 				}

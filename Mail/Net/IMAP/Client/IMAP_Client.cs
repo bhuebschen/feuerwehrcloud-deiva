@@ -358,6 +358,7 @@ namespace LumiSoft.Net.IMAP.Client
         private IMAP_Client_SelectedFolder m_pSelectedFolder    = null;
         private IMAP_Mailbox_Encoding      m_MailboxEncoding    = IMAP_Mailbox_Encoding.ImapUtf7;
         private IdleAsyncOP                m_pIdle              = null;
+        public string TRASH_CAN = "INBOX.Trash";
 
         /// <summary>
         /// Default constructor.

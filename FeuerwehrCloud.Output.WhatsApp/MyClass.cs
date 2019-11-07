@@ -5,9 +5,8 @@ using WhatsAppApi.Account;
 using WhatsAppApi.Helper;
 using WhatsAppApi.Register;
 using FeuerwehrCloud.Plugin;
-using System.ComponentModel;
 
-namespace FeuerwehrCloud.Output.WhatsApp
+namespace FeuerwehrCloud.Output
 {
 	public class WhatsAppOutput : FeuerwehrCloud.Plugin.IPlugin 
 	{
@@ -15,6 +14,30 @@ namespace FeuerwehrCloud.Output.WhatsApp
 		private WhatsAppApi.WhatsApp wa;
 		private System.Collections.Generic.Dictionary<string, string> WAConfig = new System.Collections.Generic.Dictionary<string, string> ();
 		public event PluginEvent Event;
+
+
+		public string Name {
+			get {
+				return "WhatsApp";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "WhatsApp Nachrichtendienst";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("3");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				return System.IO.File.ReadAllBytes("");
+			}
+		}
 
 		public bool IsAsync
 		{
@@ -27,8 +50,6 @@ namespace FeuerwehrCloud.Output.WhatsApp
 		}
 
 		public void Dispose() {
-			wa.Disconnect ();
-			wa = null;
 		}
 
 		public void Execute(params object[] list) {
@@ -48,7 +69,7 @@ namespace FeuerwehrCloud.Output.WhatsApp
 				string MType = ((string)list [0]);
 				switch (MType) {
 				case "location":
-					wa.SendMessageLocation(WAConfig["Target"], (double)(list [1]), (double)(list [2]), (string)(list [3]), "");
+					wa.SendMessageLocation(WAConfig["Target"], double.Parse((string)list [1],System.Globalization.CultureInfo.InvariantCulture.NumberFormat), double.Parse((string)list [2],System.Globalization.CultureInfo.InvariantCulture.NumberFormat), (string)(list [3]), "");
 					break;
 				case "text":
 					wa.SendMessage (WAConfig["Target"], ((string)list [1]));
@@ -63,7 +84,7 @@ namespace FeuerwehrCloud.Output.WhatsApp
 					wa.SendMessageVideo (WAConfig["Target"], System.IO.File.ReadAllBytes(((string)list [1])), ApiBase.VideoType.MP4);
 					break;
 				}
-				de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** Message("+((string)(list [0])).ToUpper()+") sent: " + list[1]);
+				de.SYStemiya.Helper.Logger.WriteLine ("|  > [WhatsApp] *** Message("+((string)(list [0])).ToUpper()+") sent: " + list[1]);
 				PluginEvent messageSent = Event;
 				if (messageSent != null)
 					messageSent(this, 2,2,2,2,2,2);
@@ -77,10 +98,9 @@ namespace FeuerwehrCloud.Output.WhatsApp
 			}
 		}
 
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
 		public bool Initialize(IHost hostApplication) {
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** Initializing...");
 
 
 			if(!System.IO.File.Exists("WhatsApp.cfg")) {
@@ -97,33 +117,35 @@ namespace FeuerwehrCloud.Output.WhatsApp
 			//string password = "9QhpZsVLKJAqg7RQdr0hpmqpA5Q=";
 			//"491739561779"; //"4980353749-1391848501"
 			// Prepare WhatsApp
+			de.SYStemiya.Helper.Logger.WriteLine ("|  *** WhatsApp loaded...");
+
 			return true;
 		}
 
 		private void wa_OnLoginSuccess(string phonenum, byte[] data)
 		{
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** Login success");
+			de.SYStemiya.Helper.Logger.WriteLine ("|  > [WhatsApp] *** Login success");
 		}
 
 		void wa_OnConnectSuccess ()
 		{
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** Connection success");
+			de.SYStemiya.Helper.Logger.WriteLine ("|  > [WhatsApp] *** Connection success");
 		}
 
 		void wa_LoginFailed (string data)
 		{
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** Login failed! " + data);
+			de.SYStemiya.Helper.Logger.WriteLine ("|||  > [WhatsApp] *** Login failed! " + data);
 		}
 
 		void wa_ConnectFailed (Exception ex)
 		{
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** Connection failed!");
+			de.SYStemiya.Helper.Logger.WriteLine ("|||  > [WhatsApp] *** Connection failed!");
 			de.SYStemiya.Helper.Logger.WriteLine (ex.ToString());
 		}
 
 		void wa_OnError (string id, string from, int code, string text)
 		{
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [WhatsApp] *** ERROR! " + text);
+			de.SYStemiya.Helper.Logger.WriteLine ("|||  > [WhatsApp] *** ERROR! " + text);
 		}
 
 		public WhatsAppOutput()
@@ -132,66 +154,6 @@ namespace FeuerwehrCloud.Output.WhatsApp
 
 	}
 
-	#region Actitity
-	public class WhatsAppActivityValidator : System.Workflow.ComponentModel.Compiler.ActivityValidator
-	{
-	}
-
-	[System.Workflow.ComponentModel.Compiler.ActivityValidator(typeof(WhatsAppActivityValidator))]
-	[System.Drawing.ToolboxBitmap(typeof(WhatsAppActivity), "whatsapp.ico")]
-	public class WhatsAppActivity : System.Workflow.ComponentModel.Activity
-	{
-		public WhatsAppActivity ()  {
-			this.Name = "WhatsAppActivity";
-		}
-
-		public static System.Workflow.ComponentModel.DependencyProperty ReceipientProperty = System.Workflow.ComponentModel.DependencyProperty.Register(
-			"Receipient", typeof(string), typeof(WhatsAppActivity));
-		[Description("Legt den Empfänger fest, in den die Daten geschrieben werden sollen")]
-		[Category("Activity")]
-		[Browsable(true)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-		public string Receipient
-		{
-			get
-			{
-				return ((string)base.GetValue(ReceipientProperty));
-			}
-			set
-			{
-				base.SetValue(ReceipientProperty, value);
-			}
-		}
-
-		public enum MessageTypeEnum
-		{
-			Text = 0,
-			Picture = 1,
-			Location = 2,
-			Video = 3,
-			Audio = 4
-		}
-
-		public static System.Workflow.ComponentModel.DependencyProperty MessageTypeProperty = System.Workflow.ComponentModel.DependencyProperty.Register(
-			"Receipient", typeof(MessageTypeEnum), typeof(WhatsAppActivity));
-		[Description("Legt den den Nachrichtentyp fest, mit dem die Nachricht geschickt werden sollen")]
-		[Category("Activity")]
-		[Browsable(true)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-		public MessageTypeEnum MessageType
-		{
-			get
-			{
-				return ((MessageTypeEnum)base.GetValue(MessageTypeProperty));
-			}
-			set
-			{
-				base.SetValue(MessageTypeProperty, value);
-			}
-		}
-
-	}
-	#endregion
 
 }
 

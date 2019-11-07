@@ -20,14 +20,14 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Logging;
-using Simple.MailServer.Mime;
+using SMTPd.Logging;
+using SMTPd.Mime;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public class RawLineDecoder
     {

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Simple.MailServer.Smtp.Capabilities
+namespace SMTPd.Capabilities
 {
     public static class SmtpCapabilities
     {

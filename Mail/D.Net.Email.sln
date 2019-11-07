@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D.Net.EmailClient", "D.Net.EmailClient\D.Net.EmailClient.csproj", "{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D.Net.EmailInterfaces", "D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj", "{2241D8CB-641B-4654-81D1-BE4896EFE708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net", "Net\Net.csproj", "{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2241D8CB-641B-4654-81D1-BE4896EFE708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -10,7 +10,7 @@ using System.Reflection;
 namespace FeuerwehrCloud.Input
 {
 
-	public class SMTPSever : IPlugin
+	public class SMTPServer : IPlugin
 	{
 		private SmtpServer smtpServer;
 		private System.Collections.Generic.Dictionary<string, string> SMTPConfig = new System.Collections.Generic.Dictionary<string, string> ();
@@ -37,7 +37,7 @@ namespace FeuerwehrCloud.Input
 
 		public byte[] Icon {
 			get {
-				var assembly = typeof(FeuerwehrCloud.Input.SMTPSever).GetTypeInfo().Assembly;
+				var assembly = typeof(FeuerwehrCloud.Input.SMTPServer).GetTypeInfo().Assembly;
 				string[] resources = assembly.GetManifestResourceNames();
 				Stream stream = assembly.GetManifestResourceStream("icon.ico");
 				return ((MemoryStream)stream).ToArray();
@@ -89,11 +89,11 @@ namespace FeuerwehrCloud.Input
 			{
 				Configuration =
 				{
-					DefaultGreeting = "ffwronbpi.feuerwehrcloud.de SYStemiya FeuerwehrCloud (FFW-Neubeuern) ESMTP MAIL service ready at"
+					DefaultGreeting = System.Environment.MachineName +  ".feuerwehrcloud.de FeuerwehrCloud DEIVA BOSMTP MAIL service ready at"
 				}
 			};
 			smtpServer.DefaultResponderFactory = 
-				new DefaultSmtpResponderFactory<ISmtpServerConfiguration>(smtpServer.Configuration)
+				new SmtpResponderFactory(smtpServer.Configuration)
 			{
 				DataResponder = new BOSSMTPDataResponder(smtpServer.Configuration, SMTPConfig["RootMailDir"], this)
 			};
@@ -102,7 +102,7 @@ namespace FeuerwehrCloud.Input
 			return true;
 		}
 
-		public SMTPSever() : base() {
+		public SMTPServer() : base() {
 			MailServerLogger.Set(new MailServerConsoleLogger(MailServerLogLevel.None));
 		}
 	}

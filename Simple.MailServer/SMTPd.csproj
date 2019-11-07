@@ -7,8 +7,8 @@
     <ProjectGuid>{4677857B-02B9-4A32-A8C6-222094672DF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple.MailServer</RootNamespace>
-    <AssemblyName>Simple.MailServer</AssemblyName>
+    <RootNamespace>SMTPd</RootNamespace>
+    <AssemblyName>SMTPd</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -65,7 +65,6 @@
     <Compile Include="ISession.cs" />
     <Compile Include="Logging\MailServerConsoleLogger.cs" />
     <Compile Include="Logging\MailServerLogLevel.cs" />
-    <Compile Include="Mime\EmailValidator.cs" />
     <Compile Include="RawLineEventArgs.cs" />
     <Compile Include="RequestDisconnectionEventArgs.cs" />
     <Compile Include="SessionEventArgs.cs" />
@@ -135,9 +134,17 @@
     <Compile Include="Smtp\SmtpSessionInfo.cs" />
     <Compile Include="Extensions\StreamReaderExtensions.cs" />
     <Compile Include="Smtp\SmtpSessionInfoResponder.cs" />
+    <Compile Include="Mime\XamarinEmailValidator.cs" />
+    <Compile Include="Mime\IEmailValidator.cs" />
+    <Compile Include="Smtp\SmtpResponses.cs" />
+    <Compile Include="Smtp\Capabilities\GetDefaultSmtpCapabilities.cs" />
+    <Compile Include="Smtp\Capabilities\IGetSmtpCapabilities.cs" />
+    <Compile Include="Smtp\Capabilities\SmtpCapabilities.cs" />
+    <Compile Include="Smtp\Capabilities\SmtpCapability.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pop3\" />
+    <Folder Include="Smtp\Capabilities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -148,9 +155,9 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
       <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

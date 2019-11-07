@@ -18,30 +18,41 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
+using SMTPd.Capabilities;
+using System.Linq;
+
+
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpIdentificationResponder<T> : IRespondToSmtpIdentification where T : IConfiguredSmtpRestrictions
+    public class SmtpIdentificationResponder : IRespondToSmtpIdentification
     {
-        protected readonly T Configuration;
+        protected readonly IConfiguredSmtpRestrictions Configuration;
+        private readonly IGetSmtpCapabilities _getSmtpCapabilities;
 
-        public DefaultSmtpIdentificationResponder(T configuration)
+        public SmtpIdentificationResponder(IConfiguredSmtpRestrictions configuration, IGetSmtpCapabilities getSmtpCapabilities)
         {
+            if (configuration == null) throw new ArgumentNullException("configuration");
+            if (getSmtpCapabilities == null) throw new ArgumentNullException("getSmtpCapabilities");
+
             Configuration = configuration;
+            _getSmtpCapabilities = getSmtpCapabilities;
         }
 
-        public virtual SmtpResponse VerifyIdentification(SmtpSessionInfo sessionInfo, SmtpIdentification smtpIdentification)
+        public virtual SmtpResponse VerifyIdentification(ISmtpSessionInfo sessionInfo, SmtpIdentification smtpIdentification)
         {
-            if (smtpIdentification.Mode == SmtpIdentificationMode.HELO)
-            {
-                return VerifyHelo();
-            }
+            if (smtpIdentification == null) throw new ArgumentNullException("smtpIdentification");
 
-            if (smtpIdentification.Mode == SmtpIdentificationMode.EHLO)
+            switch (smtpIdentification.Mode)
             {
+                case SmtpIdentificationMode.HELO:
+                return VerifyHelo();
+
+                case SmtpIdentificationMode.EHLO:
                 return VerifyEhlo();
             }
 
@@ -50,14 +61,19 @@ namespace Simple.MailServer.Smtp
 
         private SmtpResponse VerifyHelo()
         {
-            return SmtpResponse.OK;
+            return SmtpResponses.OK;
         }
 
         private SmtpResponse VerifyEhlo()
         {
+            var smtpCapabilities = _getSmtpCapabilities.GetCapabilities().ToList();
 
-			//var response = new SmtpResponse(250, "SIZE " + Configuration.MaxMailMessageSize, new[] { "250-"+System.Environment.MachineName+" pleased to meet you", "250-8BITMIME", "250-XPUSH", "250-PIPELINING", "250-SEND", "250-SAML", "250-STARTTLS" });
-			var response = new SmtpResponse(250, "SIZE " + Configuration.MaxMailMessageSize, new[] { "250-ffwronbpi.feuerwehrcloud.de pleased to meet you", "250-8BITMIME", "250-XPUSH", "250-PIPELINING", "250-SEND", "250-SAML", "250-SOML", "250-RSET", "250-NOOP", "250-VRFY", "250-HELP", "250-DELIVERBY", "250-ENHANCEDSTATUSCODES", "250-VERB", "250-XLICENSE","250-XVRB" }); //, "250-STARTTLS" });
+            if (!smtpCapabilities.Any())
+                return SmtpResponses.OK;
+
+            var additionalLines = smtpCapabilities.Skip(1).Select(capability => "250-" + capability).ToList();
+
+            var response = new SmtpResponse(250, smtpCapabilities.First().ToString(), additionalLines);
             return response;
         }
     }

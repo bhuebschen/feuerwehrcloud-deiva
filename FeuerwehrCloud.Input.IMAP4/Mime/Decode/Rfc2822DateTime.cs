@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using FeuerwehrCloud.Common.Logging;
 
 namespace FeuerwehrCloud.Mime.Decode
 {
@@ -94,7 +93,7 @@ namespace FeuerwehrCloud.Mime.Decode
 				return dateTime;
 			}
 
-			DefaultLogger.Log.LogDebug("No timezone found in date: " + dateInput + ". Using -0000 as default.");
+			//DefaultLogger.Log.LogDebug("No timezone found in date: " + dateInput + ". Using -0000 as default.");
 
 			// A timezone of -0000 is the same as doing nothing
 			return dateTime;
@@ -211,7 +210,7 @@ namespace FeuerwehrCloud.Mime.Decode
 				return Convert.ToDateTime(match.Value, CultureInfo.InvariantCulture);
 			}
 
-			DefaultLogger.Log.LogError("The given date does not appear to be in a valid format: " + dateInput);
+			//DefaultLogger.Log.LogError("The given date does not appear to be in a valid format: " + dateInput);
 			return DateTime.MinValue;
 		}
 
@@ -241,7 +240,7 @@ namespace FeuerwehrCloud.Mime.Decode
 					(dateTime.DayOfWeek == DayOfWeek.Saturday  && !dayName.Equals("Sat")) ||
 					(dateTime.DayOfWeek == DayOfWeek.Sunday    && !dayName.Equals("Sun")))
 				{
-					DefaultLogger.Log.LogDebug("Day-name does not correspond to the weekday of the date: " + dateInput);					
+					//DefaultLogger.Log.LogDebug("Day-name does not correspond to the weekday of the date: " + dateInput);					
 				}
 			}
 

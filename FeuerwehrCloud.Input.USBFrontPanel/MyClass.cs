@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using FeuerwehrCloud.Plugin;
 
-namespace FeuerwehrCloud.Input.USBFrontPanel
+namespace FeuerwehrCloud.Input
 {
 	public class USBFrontPanel : FeuerwehrCloud.Plugin.IPlugin
 	{
@@ -11,7 +11,30 @@ namespace FeuerwehrCloud.Input.USBFrontPanel
 
 		public event FeuerwehrCloud.Plugin.PluginEvent Event;
 		System.Threading.Thread BGThread;
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+		public string Name {
+			get {
+				return "USBFrontPanel";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "USB-Eingabemodul";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("A");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				return System.IO.File.ReadAllBytes("");
+			}
+		}
 
 		void JoypadReader (object obj)
 		{
@@ -36,7 +59,7 @@ namespace FeuerwehrCloud.Input.USBFrontPanel
 
 						foreach (byte key in j.Button.Keys)
 						{
-							de.SYStemiya.Helper.Logger.WriteLine(string.Format("Button{0}: {1}", key, j.Button[key]));
+							FeuerwehrCloud.Helper.Logger.WriteLine(string.Format("Button{0}: {1}", key, j.Button[key]));
 						}
 
 						if(j.Button[0] == true) {

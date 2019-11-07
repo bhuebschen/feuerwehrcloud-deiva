@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public class QuotedPrintableEncoderStream : Stream
     {

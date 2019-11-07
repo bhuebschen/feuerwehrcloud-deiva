@@ -12,14 +12,38 @@ using System.Collections;
 using System.Collections.Generic;
 using FeuerwehrCloud.Plugin;
 
-namespace FeuerwehrCloud.Output.BosMon
+namespace FeuerwehrCloud.Output
 {
 	public class BosMon: IPlugin
 	{
 		#region IPlugin implementation
 
 		private List<BosAlarm.Alarm> _alarme;
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+		public bool IsTerminating = false;
+
+		public string Name {
+			get {
+				return "BosMon";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "BOS-Alarm Plugin";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("9");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				return System.IO.File.ReadAllBytes("");
+			}
+		}
 
 
 		protected internal class TelegramSerialize<T>
@@ -45,6 +69,7 @@ namespace FeuerwehrCloud.Output.BosMon
 				return local;
 			}
 
+			[System.Runtime.InteropServices.ComVisible (false)]
 			public static string ToString(T obj)
 			{
 				string str = "";
@@ -109,11 +134,16 @@ namespace FeuerwehrCloud.Output.BosMon
 
 		void AcceptCallback (IAsyncResult ar)
 		{
-
-			Socket clientSocket = serverSocket.EndAcceptSocket(ar); 
-			clientSocketList.Add(clientSocket.GetHashCode().ToString(), clientSocket);
-			clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
-			serverSocket.BeginAcceptSocket(new AsyncCallback(AcceptCallback), null);
+			try {
+				if(!IsTerminating) {
+					Socket clientSocket = serverSocket.EndAcceptSocket(ar); 
+					clientSocketList.Add(clientSocket.GetHashCode().ToString(), clientSocket);
+					clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), clientSocket);
+					serverSocket.BeginAcceptSocket(new AsyncCallback(AcceptCallback), null);
+				}
+			} catch (Exception ex) {
+				
+			}
 		}
 
 		void ReceiveCallback (IAsyncResult ar)
@@ -129,7 +159,7 @@ namespace FeuerwehrCloud.Output.BosMon
 
 			Array.Copy (buffer, data, received);
 			string text = System.Text.Encoding.Default.GetString (data);
-			de.SYStemiya.Helper.Logger.WriteLine (text);
+			FeuerwehrCloud.Helper.Logger.WriteLine (text);
 			text = text.Replace ("<Step>0</Step>","<Step>1</Step>");
 
 			System.Xml.XmlDocument d = new System.Xml.XmlDocument ();
@@ -146,12 +176,16 @@ namespace FeuerwehrCloud.Output.BosMon
 		public bool Initialize (IHost hostApplication)
 		{
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [BosMon-Compatibility] *** Initializing...");
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [BosMon-Compatibility] *** Listening on Port 3334 (for BOS Alarm)");
-			serverSocket = new TcpListener (IPAddress.Any, 3334);
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** BosMon-Compatibility loaded: listening on Port 3334");
+			try {
+				serverSocket = new TcpListener (IPAddress.Any, 3334);
 
-			serverSocket.Start ();
-			serverSocket.BeginAcceptSocket(new AsyncCallback(AcceptCallback), null);   
+				serverSocket.Start ();
+				serverSocket.BeginAcceptSocket(new AsyncCallback(AcceptCallback), null);   
+
+			} catch (Exception ex) {
+
+			}
 
 
 			return true;
@@ -189,7 +223,12 @@ namespace FeuerwehrCloud.Output.BosMon
 
 		public void Dispose ()
 		{
+			try {
+				serverSocket.Stop ();
 
+			} catch (Exception ex) {
+				
+			}
 		}
 
 		#endregion

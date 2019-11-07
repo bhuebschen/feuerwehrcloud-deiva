@@ -40,7 +40,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Mono.WebServer2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyClass.cs" />
@@ -48,21 +47,21 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
-      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Projekte\SYStemiya\FeuerwehrCloud\webserver-69631\trunk\HttpServer\HttpServer.csproj">
-      <Project>{363D4A84-957E-4CDA-ACB7-EEDE603FDD81}</Project>
-      <Name>HttpServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Projekte\SYStemiya\FeuerwehrCloud\HttpServer.Addons\HttpServer.Addons.csproj">
-      <Project>{13A5686A-19EC-4BAE-9F5F-25EDCE154331}</Project>
-      <Name>HttpServer.Addons</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
       <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
       <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>FeuerwehrCloud.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\webserver-69631\trunk\HttpServer\HttpServer.csproj">
+      <Project>{363D4A84-957E-4CDA-ACB7-EEDE603FDD81}</Project>
+      <Name>HttpServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HttpServer.Addons\HttpServer.Addons.csproj">
+      <Project>{13A5686A-19EC-4BAE-9F5F-25EDCE154331}</Project>
+      <Name>HttpServer.Addons</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

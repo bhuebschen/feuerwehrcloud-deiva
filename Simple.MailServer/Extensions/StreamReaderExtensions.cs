@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace Simple.MailServer.Extensions
+namespace SMTPd.Extensions
 {
     public static class StreamReaderExtensions
     {

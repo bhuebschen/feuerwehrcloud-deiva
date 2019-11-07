@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using FeuerwehrCloud.Common.Logging;
 
 namespace FeuerwehrCloud.Mime.Decode
 {
@@ -280,7 +279,7 @@ namespace FeuerwehrCloud.Mime.Decode
 			if (toDecode.IndexOf('\'') == -1)
 			{
 				// The input was not encoded (at least not valid) and it is returned as is
-				DefaultLogger.Log.LogDebug("Rfc2231Decoder: Someone asked me to decode a string which was not encoded - returning raw string. Input: " + toDecode);
+				//DefaultLogger.Log.LogDebug("Rfc2231Decoder: Someone asked me to decode a string which was not encoded - returning raw string. Input: " + toDecode);
 				encodingUsed = null;
 				return toDecode;
 			}

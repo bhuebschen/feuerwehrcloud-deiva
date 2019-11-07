@@ -16,6 +16,7 @@ namespace FeuerwehrCloud.Mime.Decode
 		/// </summary>
 		/// <param name="base64Encoded">The string to decode</param>
 		/// <returns>A byte array that the base64 string described</returns>
+		[System.Runtime.InteropServices.ComVisible (false)]
 		public static byte[] Decode(string base64Encoded)
 		{
 			// According to http://www.tribridge.com/blog/crm/blogs/brandon-kelly/2011-04-29/Solving-OutOfMemoryException-errors-when-attempting-to-attach-large-Base64-encoded-content-into-CRM-annotations.aspx
@@ -68,6 +69,7 @@ namespace FeuerwehrCloud.Mime.Decode
 		/// <returns>A decoded string</returns>
 		/// <exception cref="ArgumentNullException">If <paramref name="base64Encoded"/> or <paramref name="encoding"/> is <see langword="null"/></exception>
 		/// <exception cref="FormatException">If <paramref name="base64Encoded"/> is not a valid base64 encoded string</exception>
+		[System.Runtime.InteropServices.ComVisible (false)]
 		public static string Decode(string base64Encoded, Encoding encoding)
 		{
 			if(base64Encoded == null)

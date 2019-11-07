@@ -5,17 +5,46 @@ using System.Windows.Forms;
 //using //SpreadsheetGear.Windows;
 using FeuerwehrCloud.Plugin;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
 
-namespace FeuerwehrCloud.Output.Excel
+namespace FeuerwehrCloud.Output
 {
-	public class XLS:  IPlugin
+	public class Excel:  IPlugin
 	{
 		public event PluginEvent Event;
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+
+		public string Name {
+			get {
+				return "Excel";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "Excel-Ausgabe";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("5");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Output.Excel).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
 
 		public bool Initialize(IHost hostApplication) {
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [ExcelPrinter] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** ExcelPrinter loaded...");
 			return true;
 		}
 
@@ -31,7 +60,7 @@ namespace FeuerwehrCloud.Output.Excel
 		}
 
 		public void Dispose() {
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [ExcelPrinter] *** Unloading...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|   [ExcelPrinter] *** Unloading...");
 		}
 
 		public void RaiseFinish(params object[] list) {
@@ -65,55 +94,23 @@ namespace FeuerwehrCloud.Output.Excel
 						PP.Start(); PP.WaitForExit();
 
 					} catch (Exception ex) {
-						
+
 					}
 
 				}));
 				P1.Start(list);
 			} catch (Exception ex) {
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(ex);
+				FeuerwehrCloud.Helper.Logger.WriteLine(ex.ToString());
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
 
-		public XLS ()
+		public Excel ()
 		{
 		}
 	}
 
-	#region Actitity
-	public class ExcelWriterActivityValidator : System.Workflow.ComponentModel.Compiler.ActivityValidator
-	{
-	}
-
-	[System.Workflow.ComponentModel.Compiler.ActivityValidator(typeof(ExcelWriterActivityValidator))]
-	[System.Drawing.ToolboxBitmap(typeof(ExcelWriterActivity), "excel.ico")]
-	public class ExcelWriterActivity : System.Workflow.ComponentModel.Activity
-	{
-		public ExcelWriterActivity ()  {
-			this.Name = "ExcelWriterActivity";
-		}
-
-		public static System.Workflow.ComponentModel.DependencyProperty FileNameProperty = System.Workflow.ComponentModel.DependencyProperty.Register(
-			"Dateiname", typeof(string), typeof(ExcelWriterActivity));
-		[Description("Legt den Dateinamen der Excel-Datei fest die verarbeitet werden sollen")]
-		[Category("Activity")]
-		[Browsable(true)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-		public string Dateiname
-		{
-			get
-			{
-				return ((string)base.GetValue(FileNameProperty));
-			}
-			set
-			{
-				base.SetValue(FileNameProperty, value);
-			}
-		}
-	}
-	#endregion
 
 }
 

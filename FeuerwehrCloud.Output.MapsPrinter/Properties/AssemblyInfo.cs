@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle ("FeuerwehrCloud.Output.MapsPrinter")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("soomba GmbH")]
-[assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Copyright (C) 2014 soomba GmbH. All rights reserved.")]
+[assembly: AssemblyCompany ("FeuerwehrCloud")]
+[assembly: AssemblyProduct ("DEIVA")]
+[assembly: AssemblyCopyright ("Copyright (C) 2014-2015 FeuerwehrCloud. All rights reserved.")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 

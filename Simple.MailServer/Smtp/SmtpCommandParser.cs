@@ -20,12 +20,12 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Logging;
+using SMTPd.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public abstract class SmtpCommandParser
     {
@@ -52,20 +52,24 @@ namespace Simple.MailServer.Smtp
                 { "RCPT TO:", ProcessCommandRcptTo },
                 { "RSET", ProcessCommandRset },
 				{ "VRFY", ProcessCommandVrfy },
-				{ "XLICENSE", ProcessCommandLIC },
+				{ "LICENSE", ProcessCommandLIC },
+				{ "LIVERESPONSE", ProcessCommandLR },
 				{ "XVRB", ProcessCommandXVRB },
 				{ "SAML", ProcessCommandSAML },
 				{ "SOML", ProcessCommandSOML },
 				{ "ENHANCEDSTATUSCODES", ProcessCommandEhSC },
-				{ "XPUSH", ProcessCommandPush },
+				{ "ALERT", ProcessCommandPush },
 				{ "HELP", ProcessCommandHelp },
 				{ "LANG", ProcessCommandHelp },
+				{ "DELIVERBY", ProcessCommandDBY },
 				{ "SMTPUTF8", ProcessCommandHelp },
 			};
 
             return mapping;
         }
 
+		protected abstract SmtpResponse ProcessCommandDBY(string name, string arguments);
+		protected abstract SmtpResponse ProcessCommandLR(string name, string arguments);
 		protected abstract SmtpResponse ProcessCommandTLSStart(string name, string arguments);
 		protected abstract SmtpResponse ProcessCommandDataStart(string name, string arguments);
         protected abstract SmtpResponse ProcessCommandDataEnd();
@@ -84,6 +88,9 @@ namespace Simple.MailServer.Smtp
 		protected abstract SmtpResponse ProcessCommandEhSC(string name, string arguments);
 		protected abstract SmtpResponse ProcessCommandPush(string name, string arguments);
 		protected abstract SmtpResponse ProcessCommandHelp(string name, string arguments);
+		//protected abstract SmtpResponse ProcessCommandHelp(string name, string arguments);
+		//protected abstract SmtpResponse ProcessCommandHelp(string name, string arguments);
+		//protected abstract SmtpResponse ProcessCommandHelp(string name, string arguments);
 
         protected abstract SmtpResponse ProcessDataLine(byte[] lineBuf);
         protected abstract SmtpResponse ProcessRawLine(string line);
@@ -97,7 +104,7 @@ namespace Simple.MailServer.Smtp
             catch (Exception ex)
             {
                 MailServerLogger.Instance.Error(ex);
-                return SmtpResponse.InternalServerError;
+                return SmtpResponses.InternalServerError;
             }
         }
 
@@ -126,25 +133,25 @@ namespace Simple.MailServer.Smtp
                 return response;
             }
 
-            return SmtpResponse.NotImplemented;
+            return SmtpResponses.NotImplemented;
         }
 
         private static bool IsLineTooLong(byte[] lineBuf, out SmtpResponse smtpResponse)
         {
             if (lineBuf.Length > 2040)
             {
-                smtpResponse = SmtpResponse.LineTooLong;
+                smtpResponse = SmtpResponses.LineTooLong;
                 return true;
             }
 
-            smtpResponse = SmtpResponse.None;
+            smtpResponse = SmtpResponses.None;
             return false;
         }
 
         private bool ProcessRawLineHasResponse(string line, out SmtpResponse smtpResponse)
         {
             smtpResponse = ProcessRawLine(line);
-            return (smtpResponse != SmtpResponse.None);
+            return (smtpResponse != SmtpResponses.None);
         }
 
         private SmtpResponse ProcessLineInDataMode(byte[] lineBuf)

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DFD46537-03CE-4B81-A8BF-85A56BA583F8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FeuerwehrCloud.Output.FileWriter</RootNamespace>
+    <RootNamespace>FeuerwehrCloud.Output</RootNamespace>
     <AssemblyName>FeuerwehrCloud.Output.FileWriter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -13,7 +13,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,15 +41,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Workflow.Activities">
-      <HintPath>..\System.Workflow.Activities.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Workflow.ComponentModel">
-      <HintPath>..\System.Workflow.ComponentModel.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Workflow.Runtime">
-      <HintPath>..\System.Workflow.Runtime.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyClass.cs">
@@ -64,13 +55,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
-      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
       <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
       <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

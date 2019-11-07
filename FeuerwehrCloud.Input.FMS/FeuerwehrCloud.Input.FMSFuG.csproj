@@ -6,7 +6,7 @@
     <ProjectGuid>{275D54DD-F912-42FC-8909-EBDC5BF93871}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FeuerwehrCloud.Input</RootNamespace>
-    <AssemblyName>FeuerwehrCloud.Input.FMS</AssemblyName>
+    <AssemblyName>FeuerwehrCloud.Input.FMSFuG</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,9 +40,9 @@
       <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
       <Name>FeuerwehrCloud.Plugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
       <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

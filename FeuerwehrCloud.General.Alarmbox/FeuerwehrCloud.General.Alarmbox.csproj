@@ -29,6 +29,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="AlarmBox">
+      <HintPath>AlarmBox.exe</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="FirmwareUpdater">
+      <HintPath>FirmwareUpdater.exe</HintPath>
+    </Reference>
+    <Reference Include="Helper">
+      <HintPath>Helper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyClass.cs" />

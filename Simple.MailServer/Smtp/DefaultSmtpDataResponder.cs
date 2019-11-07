@@ -20,32 +20,32 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpDataResponder<T> : IRespondToSmtpData where T : IConfiguredSmtpRestrictions
+    public class SmtpDataResponder : IRespondToSmtpData
     {
-        protected readonly T Configuration;
+        protected readonly IConfiguredSmtpRestrictions Configuration;
 
-        public DefaultSmtpDataResponder(T configuration)
+        public SmtpDataResponder(IConfiguredSmtpRestrictions configuration)
         {
             Configuration = configuration;
         }
 
-        public virtual SmtpResponse DataStart(SmtpSessionInfo sessionInfo)
+        public virtual SmtpResponse DataStart(ISmtpSessionInfo sessionInfo)
         {
-            return SmtpResponse.DataStart;
+            return SmtpResponses.DataStart;
         }
 
-        public virtual SmtpResponse DataLine(SmtpSessionInfo sessionInfo, byte[] lineBuf)
+        public virtual SmtpResponse DataLine(ISmtpSessionInfo sessionInfo, byte[] lineBuf)
         {
-            return SmtpResponse.None;
+            return SmtpResponses.None;
         }
 
-        public virtual SmtpResponse DataEnd(SmtpSessionInfo sessionInfo)
+        public virtual SmtpResponse DataEnd(ISmtpSessionInfo sessionInfo)
         {
-            return SmtpResponse.OK;
+            return SmtpResponses.OK;
         }
     }
 }

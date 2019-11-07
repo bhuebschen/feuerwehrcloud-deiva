@@ -1,15 +1,45 @@
-﻿using System;
+﻿  using System;
 using FeuerwehrCloud.Plugin;
 using MySql.Data.MySqlClient;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
-namespace FeuerwehrCloud.Output.MySQL
+namespace FeuerwehrCloud.Output
 {
 	public class MySQL : FeuerwehrCloud.Plugin.IPlugin
 	{
 		public event PluginEvent Event;
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+		public string Name {
+			get {
+				return "MySQL";
+			}
+		}
+
+		public string FriendlyName {
+			get {
+				return "MySQL";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("A");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				var assembly = typeof(FeuerwehrCloud.Output.MySQL).GetTypeInfo().Assembly;
+				string[] resources = assembly.GetManifestResourceNames();
+				Stream stream = assembly.GetManifestResourceStream("icon.ico");
+				return ((MemoryStream)stream).ToArray();
+			}
+		}
+
 
 		public bool IsAsync
 		{
@@ -27,7 +57,7 @@ namespace FeuerwehrCloud.Output.MySQL
 
 		public void Execute(params object[] list) {
 			MySqlConnection M = new MySqlConnection ();
-			M.ConnectionString = System.IO.File.ReadAllText (list[0]+".csf");
+			M.ConnectionString = System.IO.File.ReadAllText (list[0]+".constrf");
 			M.Open ();
 			var C = M.CreateCommand ();
 			C.CommandText = (string)(list [1]);
@@ -62,10 +92,10 @@ namespace FeuerwehrCloud.Output.MySQL
 				C.ExecuteNonQuery ();
 			}
 		}
-
+			
 		public bool Initialize(IHost hostApplication) {
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [MySQL] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  *** MySQL loaded...");
 			return true;
 		}
 

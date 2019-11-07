@@ -20,10 +20,10 @@
 // THE SOFTWARE.
 #endregion
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public interface IHaveIdleTimeSpan
     {
-        long GetIdleTimeMilliseconds();
+        System.TimeSpan GetIdleTime();
     }
 }

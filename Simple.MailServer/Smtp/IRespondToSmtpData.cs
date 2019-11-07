@@ -21,12 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public interface IRespondToSmtpData
     {
-        SmtpResponse DataStart(SmtpSessionInfo sessionInfo);
-        SmtpResponse DataLine(SmtpSessionInfo sessionInfo, byte[] lineBuf);
-        SmtpResponse DataEnd(SmtpSessionInfo sessionInfo);
+        SmtpResponse DataStart(ISmtpSessionInfo sessionInfo);
+        SmtpResponse DataLine(ISmtpSessionInfo sessionInfo, byte[] lineBuf);
+        SmtpResponse DataEnd(ISmtpSessionInfo sessionInfo);
     }
 }

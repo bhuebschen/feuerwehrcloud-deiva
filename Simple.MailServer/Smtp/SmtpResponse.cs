@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
     public class SmtpResponse : ICloneable, IEquatable<SmtpResponse>
     {
@@ -44,9 +44,14 @@ namespace Simple.MailServer.Smtp
         public ReadOnlyCollection<string> AdditionalLines { get; private set; }
 
         public bool Success { get { return ResponseCode >= 200 && ResponseCode < 400; } }
+        public bool HasValue { get { return !None.Equals(this); } }
 
         public int ResponseCode { get; private set; }
         public string ResponseText { get; private set; }
+
+        private SmtpResponse()
+        {
+        }
 
         public SmtpResponse(int responseCode, string responseText, IList<string> additionalLines = null)
         {

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A19AEBEA-F84B-49C7-BFAD-58543E8DD63E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FeuerwehrCloud.Input.IMAP4</RootNamespace>
+    <RootNamespace>FeuerwehrCloud.Input</RootNamespace>
     <AssemblyName>FeuerwehrCloud.Input.IMAP4</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -13,8 +13,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <DefineConstants>DEBUG;_ASTERISK_</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -22,7 +22,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -33,6 +33,57 @@
   <ItemGroup>
     <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mime\Decode\Base64.cs" />
+    <Compile Include="Mime\Decode\EncodedWord.cs" />
+    <Compile Include="Mime\Decode\EncodingFinder.cs" />
+    <Compile Include="Mime\Decode\QuotedPrintable.cs" />
+    <Compile Include="Mime\Decode\Rfc2231Decoder.cs" />
+    <Compile Include="Mime\Decode\Rfc2822DateTime.cs" />
+    <Compile Include="Mime\Decode\SizeParser.cs" />
+    <Compile Include="Mime\Decode\Utility.cs" />
+    <Compile Include="Mime\Header\ContentTransferEncoding.cs" />
+    <Compile Include="Mime\Header\HeaderExtractor.cs" />
+    <Compile Include="Mime\Header\HeaderFieldParser.cs" />
+    <Compile Include="Mime\Header\MessageHeader.cs" />
+    <Compile Include="Mime\Header\Received.cs" />
+    <Compile Include="Mime\Header\RfcMailAddress.cs" />
+    <Compile Include="Mime\Message.cs" />
+    <Compile Include="Mime\MessagePart.cs" />
+    <Compile Include="Mime\Traverse\AnswerMessageTraverser.cs" />
+    <Compile Include="Mime\Traverse\AttachmentFinder.cs" />
+    <Compile Include="Mime\Traverse\FindAllMessagePartsWithMediaType.cs" />
+    <Compile Include="Mime\Traverse\FindFirstMessagePartWithMediaType.cs" />
+    <Compile Include="Mime\Traverse\IAnswerMessageTraverser.cs" />
+    <Compile Include="Mime\Traverse\IQuestionAnswerMessageTraverser.cs" />
+    <Compile Include="Mime\Traverse\MultipleMessagePartFinder.cs" />
+    <Compile Include="Mime\Traverse\TextVersionFinder.cs" />
+    <Compile Include="Common\Logging\DefaultLogger.cs" />
+    <Compile Include="Common\Logging\DiagnosticsLogger.cs" />
+    <Compile Include="Common\Logging\FileLogger.cs" />
+    <Compile Include="Common\Logging\ILog.cs" />
+    <Compile Include="Common\StreamUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>FeuerwehrCloud.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
+      <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
+      <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mail\D.Net.EmailClient\D.Net.EmailClient.csproj">
+      <Project>{AF55CDC1-3DE7-4B94-8915-3EDFFE06F2B4}</Project>
+      <Name>D.Net.EmailClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mail\D.Net.EmailInterfaces\D.Net.EmailInterfaces.csproj">
+      <Project>{2241D8CB-641B-4654-81D1-BE4896EFE708}</Project>
+      <Name>D.Net.EmailInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mail\Net\Net.csproj">
+      <Project>{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}</Project>
+      <Name>Net</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

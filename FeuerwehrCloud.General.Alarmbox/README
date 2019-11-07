@@ -1,0 +1,23 @@
+Installation:
+=============
+
+- Zunächst muss das Mono Framework installiert werden. Beispielsweise unter Ubuntu:
+  sudo apt-get install mono-complete
+
+- Das tar.gz muss entpackt werden. Entweder über die graphische Oberfläche, oder in der Konsole mit:
+  tar -xvf <NAME>.tar.gz
+
+
+Verwendung:
+=============
+
+Es muss die Datei start.sh ausgeführt werden. Beispielsweise durch Doppelklick.
+Alternativ wechselt man in das Verzeichnis, wo man das tar.gz entpackt hat (cd <PFAD>) 
+und führt dann die Datei aus:
+./start.sh
+
+
+Support:
+=============
+
+Bei Fragen können sie sich gerne an info@alarm-box.de wenden.

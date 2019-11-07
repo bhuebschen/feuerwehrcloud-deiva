@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using FeuerwehrCloud.Common.Logging;
 
 namespace FeuerwehrCloud.Mime.Decode
 {
@@ -56,7 +55,7 @@ namespace FeuerwehrCloud.Mime.Decode
 				}
 			} catch (FormatException e)
 			{
-				DefaultLogger.Log.LogError("Base64: (FormatException) " + e.Message + "\r\nOn string: " + base64Encoded);
+				//DefaultLogger.Log.LogError("Base64: (FormatException) " + e.Message + "\r\nOn string: " + base64Encoded);
 				throw;
 			}
 		}

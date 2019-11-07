@@ -235,6 +235,27 @@ namespace D.Net.EmailClient
         }
 
         public void LoadInfos() { }
+
+		public void SetUnread()
+		{
+		}
+
+		public void SetRead()
+		{
+		}
+
+		public void SetDeleted(string tc)
+		{
+		}
+
+		public void SetAnswered()
+		{
+		}
+
+		public void SetUnrecent()
+		{
+		}
+
     }
 
     public class POP3_Mail_Attachment: IEMailAttachment

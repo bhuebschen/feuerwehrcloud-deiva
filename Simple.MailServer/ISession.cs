@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 #endregion
 
-namespace Simple.MailServer
+namespace SMTPd
 {
     public interface ISession : ICanDisconnect, IHaveIdleTimeSpan
     {

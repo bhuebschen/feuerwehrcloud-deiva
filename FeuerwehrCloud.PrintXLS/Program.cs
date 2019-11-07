@@ -11,6 +11,7 @@ namespace FeuerwehrCloud.PrintXLS
 	class Program
 	{
 		[STAThread]
+		[System.Runtime.InteropServices.ComVisible (false)]
 		public static void Main (string[] Pages)
 		{
 			XmlReader reader = XmlReader.Create(Pages[0]); 
@@ -21,7 +22,7 @@ namespace FeuerwehrCloud.PrintXLS
 
 			SpreadsheetGear.Windows.Forms.WorkbookView WV = new SpreadsheetGear.Windows.Forms.WorkbookView();
 
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [ExcelPrinter] *** Opening " +  Pages[1]);
+			FeuerwehrCloud.Helper.Logger.WriteLine ("|  > [ExcelPrinter] *** Opening " +  Pages[1]);
 			WV.ActiveWorkbook =  SpreadsheetGear.Factory.GetWorkbookSet().Workbooks.Open(Pages[1]);
 			WV.GetLock();
 			SpreadsheetGear.IWorksheet WB = WV.ActiveWorkbook.Worksheets [0];

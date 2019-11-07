@@ -20,22 +20,22 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpVerifyResponder<T> : IRespondToSmtpVerify where T : IConfiguredSmtpRestrictions
+    public class SmtpVerifyResponder : IRespondToSmtpVerify
     {
-        protected readonly T Configuration;
+        protected readonly IConfiguredSmtpRestrictions Configuration;
 
-        public DefaultSmtpVerifyResponder(T configuration)
+        public SmtpVerifyResponder(IConfiguredSmtpRestrictions configuration)
         {
             Configuration = configuration;
         }
 
-        public SmtpResponse Verify(SmtpSessionInfo sessionInfo, string arguments)
+        public SmtpResponse Verify(ISmtpSessionInfo sessionInfo, string arguments)
         {
-            return new SmtpResponse(252, "2.5.2 Send some mail, i'll try my best");
+            return SmtpResponses.VerifyDummyResponse;
         }
     }
 }

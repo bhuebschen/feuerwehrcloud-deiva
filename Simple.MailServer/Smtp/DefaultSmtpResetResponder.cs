@@ -20,22 +20,24 @@
 // THE SOFTWARE.
 #endregion
 
-using Simple.MailServer.Smtp.Config;
+using SMTPd.Smtp.Config;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class DefaultSmtpResetResponder<T> : IRespondToSmtpReset where T : IConfiguredSmtpRestrictions
+    public class SmtpResetResponder : IRespondToSmtpReset
     {
-        protected readonly T Configuration;
+        protected readonly IConfiguredSmtpRestrictions Configuration;
 
-        public DefaultSmtpResetResponder(T configuration)
+        public SmtpResetResponder(IConfiguredSmtpRestrictions configuration)
         {
             Configuration = configuration;
         }
 
-        public SmtpResponse Reset(SmtpSessionInfo sessionInfo)
+        public SmtpResponse Reset(ISmtpSessionInfo sessionInfo)
         {
-            return SmtpResponse.OK;
+            sessionInfo.Reset();
+
+            return SmtpResponses.OK;
         }
     }
 }

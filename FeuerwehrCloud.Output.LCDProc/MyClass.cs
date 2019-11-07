@@ -2,7 +2,7 @@
 using System.IO;
 using FeuerwehrCloud.Plugin;
 
-namespace FeuerwehrCloud.Output.LCDProc
+namespace FeuerwehrCloud.Output
 {
 	public class Display :  IPlugin
 	{
@@ -10,7 +10,31 @@ namespace FeuerwehrCloud.Output.LCDProc
 
 		public static System.Net.Sockets.Socket S = new System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.IP);
 		public static int iTimer;
-		private IHost My;
+		private FeuerwehrCloud.Plugin.IHost My;
+
+
+		public string Name {
+			get {
+				return "Display";
+			}
+		}
+		public string FriendlyName {
+			get {
+				return "LCD Anzeigeplugin";
+			}
+		}
+
+		public Guid GUID {
+			get {
+				return new Guid ("6");
+			}
+		}
+
+		public byte[] Icon {
+			get {
+				return System.IO.File.ReadAllBytes("");
+			}
+		}
 
 		void Connector ()
 		{
@@ -21,22 +45,21 @@ namespace FeuerwehrCloud.Output.LCDProc
 				Display.S.Send (System.Text.Encoding.Default.GetBytes ("screen_add s1\r\n"));
 				Display.S.Send (System.Text.Encoding.Default.GetBytes ("widget_add s1 w1 string\r\n"));
 				Display.S.Send (System.Text.Encoding.Default.GetBytes ("widget_add s1 w2 string\r\n"));
-				RaiseFinish ("SUCCESS");
+				RaiseFinish ("text","SUCCESS");
 			}
 			catch (Exception ex) {
-				de.SYStemiya.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-> [LCDProc] *** UNABLE TO CONNECT TO LCDPROC SERVER ***");
-				RaiseFinish (ex.ToString ());
+				FeuerwehrCloud.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-> [LCDProc] *** UNABLE TO CONNECT TO LCDPROC SERVER ***");
 			}
 		}
 		public bool Initialize(IHost hostApplication) {
 			My = hostApplication;
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [LCDProc] *** Initializing...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [LCDProc] *** Initializing...");
 			try {
 				System.Threading.Thread t = new System.Threading.Thread (Connector);
 				t.Start();
 			} catch (Exception ex2) {
-				de.SYStemiya.Helper.Logger.WriteLine ("[" + System.DateTime.Now.ToString ("T") + "] |-> [LCDProc] *** ERROR: " + ex2);
-				RaiseFinish ("ERROR", ex2.ToString ());
+				FeuerwehrCloud.Helper.Logger.WriteLine ("| [" + System.DateTime.Now.ToString ("T") + "] |-> [LCDProc] *** ERROR: " + ex2);
+				RaiseFinish ("text","ERROR", ex2.ToString ());
 			}
 			return true;
 		}
@@ -53,7 +76,7 @@ namespace FeuerwehrCloud.Output.LCDProc
 
 		public void Dispose() {
 			S.Close ();
-			de.SYStemiya.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [LCDProc] *** Unloading...");
+			FeuerwehrCloud.Helper.Logger.WriteLine ("| ["+System.DateTime.Now.ToString("T") +"] |-> [LCDProc] *** Unloading...");
 		}
 
 		public void RaiseFinish(params object[] list) {

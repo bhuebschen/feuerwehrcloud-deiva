@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public static class DateTimeRfc2822
     {

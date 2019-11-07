@@ -6,7 +6,7 @@
     <ProjectGuid>{303F3A05-8F6B-4CB4-A7B2-023603EBBB50}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FeuerwehrCloud.Output</RootNamespace>
-    <AssemblyName>FeuerwehrCloud.Output.WOL</AssemblyName>
+    <AssemblyName>FeuerwehrCloud.Output.WakeOnLan</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -66,13 +66,13 @@
     <EmbeddedResource Include="wol.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
-      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
       <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
       <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -21,9 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-namespace Simple.MailServer.Smtp.Config
+namespace SMTPd.Smtp.Config
 {
     public interface IConfiguredSmtpRestrictions : IConfigMaxMailMessageSize
     {
+        long MaxNumberOfRecipients { get; set; }
     }
 }

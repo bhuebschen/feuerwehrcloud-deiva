@@ -23,9 +23,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace Simple.MailServer.Smtp
+namespace SMTPd.Smtp
 {
-    public class SmtpSessionInfo
+    public interface ISmtpSessionInfo
+    {
+        bool HasData { get; set; }
+        SmtpIdentification Identification { get; set; }
+        MailAddressWithParameters MailFrom { get; set; }
+        List<MailAddressWithParameters> Recipients { get; }
+        DateTime CreatedTimestamp { get; }
+
+        void Reset();
+    }
+
+    class SmtpSessionInfo : ISmtpSessionInfo
     {
         public bool HasData { get; set; }
         public SmtpIdentification Identification { get; set; }

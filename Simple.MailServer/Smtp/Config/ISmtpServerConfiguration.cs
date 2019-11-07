@@ -22,14 +22,13 @@
 
 using System;
 
-namespace Simple.MailServer.Smtp.Config
+namespace SMTPd.Smtp.Config
 {
     public interface ISmtpServerConfiguration : IConfiguredSmtpRestrictions
     {
         string DefaultGreeting { get; set; }
-        long GlobalConnectionTimeout { get; set; }
-        long ConnectionIdleTimeout { get; set; }
-        long MaxNumberOfRecipients { get; set; }
+        TimeSpan GlobalConnectionTimeout { get; set; }
+        TimeSpan ConnectionIdleTimeout { get; set; }
 
         event Action<ISmtpServerConfiguration> ConfigurationChanged;
     }

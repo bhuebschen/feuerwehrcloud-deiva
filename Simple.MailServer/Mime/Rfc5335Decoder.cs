@@ -25,7 +25,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Simple.MailServer.Mime
+namespace SMTPd.Mime
 {
     public static class Rfc5335Decoder
     {

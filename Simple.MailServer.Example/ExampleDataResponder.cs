@@ -1,12 +1,12 @@
-﻿using Simple.MailServer.Smtp;
-using Simple.MailServer.Smtp.Config;
+﻿using SMTPd.Smtp;
+using SMTPd.Smtp.Config;
 using System;
 using System.IO;
 using System.Text;
 
 namespace FeuerwehrCloud.SMTP
 {
-    class ExampleDataResponder : DefaultSmtpDataResponder<ISmtpServerConfiguration>
+	class ExampleDataResponder : SmtpDataResponder
     {
         private readonly string _mailDir;
 
@@ -23,24 +23,24 @@ namespace FeuerwehrCloud.SMTP
                 Directory.CreateDirectory(directory);
         }
 
-        public override SmtpResponse DataStart(SmtpSessionInfo sessionInfo)
+        public override SmtpResponse DataStart(ISmtpSessionInfo sessionInfo)
         {
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** Start receiving mail: {0}", GetFileNameFromSessionInfo(sessionInfo));
+			FeuerwehrCloud.Helper.Logger.WriteLine("|  < [SMTPServer] *** Start receiving mail: {0}", GetFileNameFromSessionInfo(sessionInfo));
             return SmtpResponse.DataStart;
         }
 
-        private string GetFileNameFromSessionInfo(SmtpSessionInfo sessionInfo)
+        private string GetFileNameFromSessionInfo(ISmtpSessionInfo sessionInfo)
         {
             var fileName = sessionInfo.CreatedTimestamp.ToString("yyyy-MM-dd_HHmmss_fff") + ".eml";
             var fullName = Path.Combine(_mailDir, fileName);
             return fullName;
         }
 
-        public override SmtpResponse DataLine(SmtpSessionInfo sessionInfo, byte[] lineBuf)
+        public override SmtpResponse DataLine(ISmtpSessionInfo sessionInfo, byte[] lineBuf)
         {
             var fileName = GetFileNameFromSessionInfo(sessionInfo);
 
-			//de.SYStemiya.Helper.Logger.WriteLine("{0} <<< {1}", fileName, Encoding.UTF8.GetString(lineBuf));
+			//FeuerwehrCloud.Helper.Logger.WriteLine("{0} <<< {1}", fileName, Encoding.UTF8.GetString(lineBuf));
 
             using (var stream = File.OpenWrite(fileName))
             {
@@ -54,12 +54,12 @@ namespace FeuerwehrCloud.SMTP
             return SmtpResponse.None;
         }
 
-        public override SmtpResponse DataEnd(SmtpSessionInfo sessionInfo)
+        public override SmtpResponse DataEnd(ISmtpSessionInfo sessionInfo)
         {
             var fileName = GetFileNameFromSessionInfo(sessionInfo);
             var size = GetFileSize(fileName);
 
-			de.SYStemiya.Helper.Logger.WriteLine("| ["+System.DateTime.Now.ToString("T") +"] |-< [SMTPServer] *** Mail received ({0} bytes): {1}", size, fileName);
+			FeuerwehrCloud.Helper.Logger.WriteLine("|  < [SMTPServer] *** Mail received ({0} bytes): {1}", size, fileName);
 
             var successMessage = String.Format("{0} bytes received", size);
             var response = SmtpResponse.OK.CloneAndChange(successMessage);

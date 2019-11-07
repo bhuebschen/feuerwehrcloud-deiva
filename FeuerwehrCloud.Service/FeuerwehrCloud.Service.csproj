@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,6 +8,9 @@
     <RootNamespace>FeuerwehrCloud.Service</RootNamespace>
     <AssemblyName>FeuerwehrCloud.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\..\Users\systemiya-apple\fwc.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,7 +20,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -50,17 +53,20 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="UPnP">
-      <HintPath>..\UPnP.dll</HintPath>
-    </Reference>
     <Reference Include="NLua">
-      <HintPath>..\NLua\Core\NLua\obj\Release\NLua.dll</HintPath>
+      <HintPath>NLua.dll</HintPath>
     </Reference>
     <Reference Include="KopiLua">
-      <HintPath>..\NLua\Core\KopiLua\Bin\Release\net45\KopiLua.dll</HintPath>
+      <HintPath>KopiLua.dll</HintPath>
     </Reference>
     <Reference Include="KeraLua">
-      <HintPath>..\NLua\Core\KeraLua\src\bin\Release\net45\KeraLua.dll</HintPath>
+      <HintPath>KeraLua.dll</HintPath>
+    </Reference>
+    <Reference Include="ManagedUPnP">
+      <HintPath>ManagedUPnP.dll</HintPath>
+    </Reference>
+    <Reference Include="UPnP">
+      <HintPath>UPnP.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,24 +75,19 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Fakes Include="Fakes\Mono.Posix.fakes" />
     <None Include="packages.config" />
     <None Include="liblua52.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-xcopy /s /y "\\psf\Host\Volumes\Macintosh HD\FeuerwehrCloud - Source\packages\NLua.1.3.2.1\lib\native\*.*" "$(TargetDir)"</PostBuildEvent>
-  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\de.SYStemiya.Helper\de.SYStemiya.Helper.csproj">
-      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
-      <Name>de.SYStemiya.Helper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FeuerwehrCloud.Plugin\FeuerwehrCloud.Plugin.csproj">
       <Project>{82BBDECF-E786-4A20-95F1-EF87C76AAB47}</Project>
       <Name>FeuerwehrCloud.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\de.SYStemiya.Helper\FeuerwehrCloud.Helper.csproj">
+      <Project>{7A060730-7C6D-4171-8903-5E81312E631E}</Project>
+      <Name>FeuerwehrCloud.Helper</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
