@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{10F98BFA-8BB1-47D2-9905-70EDF02A9C3A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FeuerwehrCloud.Input.FRITZCallMonitor</RootNamespace>
+    <RootNamespace>FeuerwehrCloud.Input</RootNamespace>
     <AssemblyName>FeuerwehrCloud.Input.FRITZCallMonitor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -13,7 +13,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

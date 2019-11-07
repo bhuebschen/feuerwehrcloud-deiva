@@ -7,7 +7,7 @@
     <ProjectGuid>{60B95F06-56C9-4783-9FCF-6DCD48F5EE32}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FeuerwehrCloud.Input.SMTP</RootNamespace>
+    <RootNamespace>FeuerwehrCloud.Input</RootNamespace>
     <AssemblyName>FeuerwehrCloud.Input.SMTP</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,14 +25,14 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug - Windows|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\de.SYStemiya.FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
+    <OutputPath>..\FeuerwehrCloud.Service\bin\Debug\plugins</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
